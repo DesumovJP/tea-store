@@ -1,0 +1,12 @@
+.imgEnter {
+  opacity: 0;
+  transform: scale(0.985);
+  animation: fadeInProduct 220ms ease forwards;
+}
+
+@keyframes fadeInProduct {
+  from { opacity: 0; transform: scale(0.985); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+

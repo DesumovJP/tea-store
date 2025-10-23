@@ -1,0 +1,36 @@
+.card {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.show {
+  animation: fadeUp 240ms ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Staggered delays */
+.d0 { animation-delay: 0ms; }
+.d1 { animation-delay: 30ms; }
+.d2 { animation-delay: 60ms; }
+.d3 { animation-delay: 90ms; }
+.d4 { animation-delay: 120ms; }
+.d5 { animation-delay: 150ms; }
+.d6 { animation-delay: 180ms; }
+.d7 { animation-delay: 210ms; }
+.d8 { animation-delay: 240ms; }
+.d9 { animation-delay: 270ms; }
+.d10 { animation-delay: 300ms; }
+.d11 { animation-delay: 330ms; }
+.d12 { animation-delay: 360ms; }
+.d13 { animation-delay: 390ms; }
+.d14 { animation-delay: 420ms; }
+.d15 { animation-delay: 450ms; }
+.d16 { animation-delay: 480ms; }
+.d17 { animation-delay: 510ms; }
+.d18 { animation-delay: 540ms; }
+.d19 { animation-delay: 570ms; }
+

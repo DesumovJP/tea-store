@@ -1,0 +1,32 @@
+.shake {
+  animation: cartBounce 600ms ease-out 1;
+}
+
+@keyframes cartBounce {
+  0% { 
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  15% { 
+    transform: translateY(-8px) rotate(-15deg) scale(1.1);
+  }
+  30% { 
+    transform: translateY(-12px) rotate(20deg) scale(1.15);
+  }
+  45% { 
+    transform: translateY(-8px) rotate(-10deg) scale(1.1);
+  }
+  60% { 
+    transform: translateY(-4px) rotate(8deg) scale(1.05);
+  }
+  75% { 
+    transform: translateY(-2px) rotate(-4deg) scale(1.02);
+  }
+  90% { 
+    transform: translateY(0px) rotate(2deg) scale(1.01);
+  }
+  100% { 
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+}
+
+

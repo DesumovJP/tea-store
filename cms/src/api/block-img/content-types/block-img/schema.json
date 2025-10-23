@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "block_imgs",
+  "info": {
+    "singularName": "block-img",
+    "pluralName": "block-imgs",
+    "displayName": "BlockImg"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "ImgId": {
+      "type": "uid"
+    }
+  }
+}
