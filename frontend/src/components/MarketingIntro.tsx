@@ -19,10 +19,8 @@ export default function MarketingIntro({
       <Container className={styles.wrap} maxWidth={false}>
         <Typography 
           component="h2" 
-          className={`${styles.title} hipster-heading hipster-h1`}
-          sx={{
-            textAlign: 'center',
-          }}
+          className={styles.title}
+          sx={{ textAlign: 'center' }}
         >
           {title}
         </Typography>

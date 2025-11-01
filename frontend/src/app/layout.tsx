@@ -1,24 +1,7 @@
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import { Suspense } from "react";
 import Analytics from "@/components/Analytics";
-
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-});
 
 
 export const metadata = {
@@ -37,7 +20,7 @@ export default function RootLayout({
         <html lang="en">
         <head>
         </head>
-        <body className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable}`}>
+        <body>
             <Suspense>
                 <ClientLayout>
                     {children}

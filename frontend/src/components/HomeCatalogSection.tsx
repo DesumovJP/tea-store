@@ -139,24 +139,12 @@ export default function HomeCatalogSection({ products: propProducts, categories:
     };
 
     return (
-        <Box sx={{ bgcolor: 'var(--background)' }}>
-            <Box sx={{
-                maxWidth: '100%',
-                mx: 'auto',
-                px: { xs: '1rem', md: '10%', lg: '15%' },
-                py: '2rem',
-            }}>
+        <Box className="home-cat-root">
+            <Box className="home-cat-container">
                 {/* Top filter/search/sort bar */}
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 3 }}>
+                <Box className="home-cat-toolbar">
                     {/* Categories as horizontal scrollable row */}
-                    <Box sx={{
-                        display: { xs: 'grid', md: 'flex' },
-                        gridTemplateColumns: { xs: 'repeat(3, 1fr)', md: 'unset' },
-                        gap: 1,
-                        justifyContent: { md: 'center' },
-                        overflowX: 'visible',
-                        pb: 0.5,
-                    }}>
+                    <Box className="home-cat-categories">
                         <FilterButton isActive={activeCategoryId === null} onClick={() => setActiveCategoryId(null)} imageUrl={undefined}>
                             All teas
                         </FilterButton>
@@ -175,17 +163,17 @@ export default function HomeCatalogSection({ products: propProducts, categories:
                     </Box>
 
                     {/* Search + Sort row */}
-                    <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap', alignItems: 'center' }}>
-                        <Box sx={{ flex: { xs: '1 1 100%', md: '1 0 420px' } }}>
+                    <Box style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+                        <Box className="home-cat-search">
                             <OutlinedInput
                                 placeholder="Search by name"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
-                                sx={{ width: '100%', '& .MuiOutlinedInput-input': { py: '0.9375rem' } }}
+                                className="home-cat-search-input home-cat-input-wide input input--light"
                             />
                         </Box>
-                        <FormControl sx={{ width: { xs: '100%', sm: 240 }, ml: 'auto' }}>
+                        <FormControl className="home-cat-sort">
                             <Select
                                 value={sortBy}
                                 onChange={(e) => setSortBy(e.target.value)}
@@ -200,14 +188,6 @@ export default function HomeCatalogSection({ products: propProducts, categories:
                                         default: return 'Sort by rating';
                                     }
                                 }}
-                                sx={{
-                                    '& .MuiSelect-select': {
-                                        textTransform: 'none',
-                                        fontWeight: 400,
-                                        py: '0.9375rem',
-                                        px: '1.25rem',
-                                    }
-                                }}
                             >
                                 <MenuItem value="ratings">Sort by rating</MenuItem>
                                 <MenuItem value="price-low">Sort by price</MenuItem>
@@ -219,44 +199,25 @@ export default function HomeCatalogSection({ products: propProducts, categories:
                 </Box>
 
                 {/* Grid */}
-                <Grid container spacing={2} sx={{ minHeight: { xs: '50vh', md: '60vh' } }}>
+                <Grid container spacing={2} className="home-cat-grid">
                     {sortedProducts.map((p, idx) => (
                         <Grid key={p.documentId} size={{ xs: 6, sm: 4, md: 3, lg: 3 }} className={`${anim.card} ${anim.show} ${anim[`d${idx % 20}`]}`}>
-                            <Link href={`/catalog/${p.slug || p.documentId}`} onClick={(e) => handleNavigateProduct(p, e)} style={{ textDecoration: 'none', display: 'block' }}>
-                                <Box sx={{
-                                    bgcolor: '#f5f9f5',
-                                    p: 1.25,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    borderRadius: 1,
-                                    border: '0.0625rem solid transparent',
-                                    boxShadow: '0 0.25rem 1rem rgba(0,0,0,0)',
-                                    cursor: 'pointer',
-                                    transform: 'translateY(0)',
-                                    willChange: 'transform, box-shadow',
-                                    transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
-                                    '&:hover': {
-                                        boxShadow: '0 0.5rem 1.5rem rgba(0,0,0,0.12)',
-                                        transform: 'translateY(-2px)',
-                                        borderColor: 'rgba(59,77,60,0.25)'
-                                    }
-                                }}>
+                            <Link href={`/catalog/${p.slug || p.documentId}`} onClick={(e) => handleNavigateProduct(p, e)} className="catalog-product-card-link">
+                                <Box className="home-cat-card">
                                     {/* Top Info */}
-                                    <Box sx={{ mb: { xs: 0.75, sm: 0.5 }, mt: { xs: 0.25, sm: 0.25 } }}>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1, mb: 0.25, minHeight: 30 }}>
-                                            <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-                                                <Typography variant="h6" sx={{ fontSize: { xs: '0.8rem', sm: '0.825rem' }, fontWeight: 600, lineHeight: 1.1, color: '#2c2c2c', letterSpacing: '0.02em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                    <Box>
+                                        <Box className="home-cat-card-top">
+                                            <Box style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+                                                <Typography variant="h6" className="home-cat-card-title">
                                                     {p.title}
                                                 </Typography>
-                                                <Typography variant="body2" sx={{ color: '#6f6f6f', fontSize: { xs: '0.725rem', sm: '0.75rem' }, mt: 0.25 }}>
+                                                <Typography variant="body2" className="home-cat-price">
                                                     ${p.price.toFixed(2)}
                                                 </Typography>
                                             </Box>
                                             <Button
-                                                variant="outlined"
-                                                size="small"
+                                                className="btn btn--outline btn--sm"
                                                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleAddToCart(p); }}
-                                                sx={{ minWidth: 56, maxWidth: 72, flexShrink: 0, height: 28, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 2, borderColor: 'rgba(0,0,0,0.28)', color: '#2c2c2c', textTransform: 'none', fontSize: '0.65rem', fontWeight: 500, letterSpacing: '0.08em', borderRadius: 1, bgcolor: 'transparent', transition: 'all 0.2s ease-in-out', '&:hover': { borderColor: '#3b4d3c', backgroundColor: '#3b4d3c', color: '#ffffff' } }}
                                             >
                                                 + ADD
                                             </Button>
@@ -264,11 +225,11 @@ export default function HomeCatalogSection({ products: propProducts, categories:
                                     </Box>
 
                                     {/* Image */}
-                                    <Box sx={{ width: '100%', height: { xs: '10rem', sm: '12rem', md: '13rem' }, bgcolor: '#f5f9f5', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', mb: 0.75 }}>
+                                    <Box className="home-cat-img-box">
                                         {p.images?.[0]?.url ? (
-                                            <CardMedia component="img" image={`${process.env.NEXT_PUBLIC_CMS_URL}${p.images[0].url}`} alt={p.images?.[0]?.alternativeText || p.title} loading="lazy" decoding="async" fetchPriority="low" sx={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
+                                            <CardMedia component="img" image={`${process.env.NEXT_PUBLIC_CMS_URL}${p.images[0].url}`} alt={p.images?.[0]?.alternativeText || p.title} loading="lazy" decoding="async" fetchPriority="low" style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
                                         ) : (
-                                            <Box sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3b4d3c', bgcolor: 'transparent' }}>
+                                            <Box className="product-card-missing-image">
                                                 <Box component="svg" width={88} height={88} viewBox="0 0 64 64" fill="none">
                                                     <circle cx="32" cy="32" r="30" fill="#f5f9f5"/>
                                                     <g fill="currentColor">
@@ -284,12 +245,12 @@ export default function HomeCatalogSection({ products: propProducts, categories:
 
                                     {/* Bottom info */}
                                     <Box>
-                                        <Box sx={{ minHeight: 18, mb: 0.25 }}>
+                                        <Box style={{ minHeight: 18, marginBottom: 4 }}>
                                             {(p.reviews?.length || 0) > 0 && (
                                                 <StarRating rating={Math.round(calculateAverageRating(p.reviews || []))} reviewCount={p.reviews?.length || 0} size="small" filledColor="#2c2c2c" emptyColor="#9e9e9e" />
                                             )}
                                         </Box>
-                                        <Typography variant="body2" sx={{ fontSize: { xs: '0.675rem', sm: '0.7rem' }, color: 'text.secondary', mb: 0.25, minHeight: '2.8em', lineHeight: 1.1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                        <Typography variant="body2" className="home-cat-desc">
                                             {p.shortDescription || '\u00A0'}
                                         </Typography>
                                     </Box>
@@ -300,7 +261,7 @@ export default function HomeCatalogSection({ products: propProducts, categories:
                 </Grid>
 
                 
-            </Box>
+        </Box>
         </Box>
     );
 }

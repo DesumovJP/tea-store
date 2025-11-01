@@ -1,7 +1,6 @@
 "use client";
 
 import { Box, Container, Typography, Grid } from "@mui/material";
-import AnimatedSection from "./AnimatedSection";
 
 interface TeaProcessProps {
   images?: {
@@ -29,7 +28,6 @@ export default function TeaProcess({
         {/* First section: Text left, Image right */}
         <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center" sx={{ mb: { xs: 6, md: 8 } }}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <AnimatedSection direction="left" delay={0}>
               <Box sx={{ pr: { md: 4 } }}>
               <Typography variant="h3" sx={{ 
                 fontWeight: 800, 
@@ -67,10 +65,8 @@ export default function TeaProcess({
                 directly from farmers who share our commitment to sustainable and ethical practices.
               </Typography>
               </Box>
-            </AnimatedSection>
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
-            <AnimatedSection direction="right" delay={200}>
               <Box sx={{ 
                 height: { xs: 300, md: 400 },
                 borderRadius: 2,
@@ -88,14 +84,12 @@ export default function TeaProcess({
                   }}
                 />
               </Box>
-            </AnimatedSection>
           </Grid>
         </Grid>
 
         {/* Second section: Image left, Text right (mirrored) */}
         <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center" sx={{ mb: { xs: 6, md: 8 } }}>
           <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 2, md: 1 } }}>
-            <AnimatedSection direction="left" delay={400}>
               <Box sx={{ 
                 height: { xs: 300, md: 400 },
                 borderRadius: 2,
@@ -113,10 +107,8 @@ export default function TeaProcess({
                   }}
                 />
               </Box>
-            </AnimatedSection>
           </Grid>
           <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
-            <AnimatedSection direction="right" delay={600}>
               <Box sx={{ pl: { md: 4 } }}>
               <Typography variant="h3" sx={{ 
                 fontWeight: 800, 
@@ -154,14 +146,12 @@ export default function TeaProcess({
                 control, guaranteeing that only the highest grade teas bear our name.
               </Typography>
               </Box>
-            </AnimatedSection>
           </Grid>
         </Grid>
 
         {/* Third section: Text left, Image right */}
         <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center">
           <Grid size={{ xs: 12, md: 6 }}>
-            <AnimatedSection direction="left" delay={800}>
               <Box sx={{ pr: { md: 4 } }}>
               <Typography variant="h3" sx={{ 
                 fontWeight: 800, 
@@ -199,10 +189,8 @@ export default function TeaProcess({
                 of chamomile, our carefully curated selection supports your health journey.
               </Typography>
               </Box>
-            </AnimatedSection>
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
-            <AnimatedSection direction="right" delay={1000}>
               <Box sx={{ 
                 height: { xs: 300, md: 400 },
                 borderRadius: 2,
@@ -220,7 +208,6 @@ export default function TeaProcess({
                   }}
                 />
               </Box>
-            </AnimatedSection>
           </Grid>
         </Grid>
       </Container>

@@ -1,15 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { 
-  Box, 
-  Typography, 
-  TextField, 
-  Button, 
-  Paper,
-  Alert,
-  CircularProgress
-} from "@mui/material";
+import { Box, Typography, TextField, Button, Paper, Alert, CircularProgress } from "@mui/material";
 import StarRating from "./StarRating";
 
 interface AddReviewProps {
@@ -77,7 +69,7 @@ export default function AddReview({ productId, onReviewAdded }: AddReviewProps) 
   // If review was successfully submitted, show only success message
   if (message?.type === 'success') {
     return (
-      <Paper elevation={0} sx={{ p: 3, mt: 3, border: 'none', boxShadow: 'none' }}>
+      <Paper elevation={0} className="review-form" style={{ border: 'none' }}>
         <Alert 
           severity="success" 
           sx={{ mb: 0 }}
@@ -89,25 +81,8 @@ export default function AddReview({ productId, onReviewAdded }: AddReviewProps) 
   }
 
   return (
-    <Paper elevation={0} sx={{ 
-      p: 3, 
-      mt: 3, 
-      border: '2px solid #2c2c2c', 
-      borderRadius: 0,
-      bgcolor: '#ffffff',
-      boxShadow: '2px 2px 0px #66bb6a'
-    }}>
-      <Typography variant="h6" sx={{ 
-        mb: 2, 
-        fontWeight: 300,
-        fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-        letterSpacing: '-0.02em',
-        textTransform: 'lowercase',
-        color: '#1a1a1a',
-        fontSize: '1.5rem'
-      }}>
-        write a review
-      </Typography>
+    <Paper elevation={0} className="review-form">
+      <Typography variant="h6" className="review-form-title">write a review</Typography>
       
       {message && (
         <Alert 
@@ -120,17 +95,8 @@ export default function AddReview({ productId, onReviewAdded }: AddReviewProps) 
       )}
 
       <form onSubmit={handleSubmit}>
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="subtitle2" sx={{ 
-            mb: 1, 
-            fontWeight: 300,
-            fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-            letterSpacing: '-0.02em',
-            textTransform: 'lowercase',
-            color: '#1a1a1a'
-          }}>
-            rating *
-          </Typography>
+        <Box className="review-form-field">
+          <Typography variant="subtitle2" className="reviews-text">rating *</Typography>
           <StarRating 
             rating={rating} 
             reviewCount={0} 
@@ -142,39 +108,14 @@ export default function AddReview({ productId, onReviewAdded }: AddReviewProps) 
           />
         </Box>
 
-        <Box sx={{ mb: 2 }}>
+        <Box className="review-form-field review-field input input--light">
           <TextField
             fullWidth
             label="your name *"
             value={authorName}
             onChange={(e) => setAuthorName(e.target.value)}
             required
-            sx={{ 
-              mb: 2,
-              '& .MuiOutlinedInput-root': {
-                borderRadius: 0,
-                border: '1px solid #2c2c2c',
-                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                letterSpacing: '-0.02em',
-                textTransform: 'lowercase',
-                fontWeight: 300,
-                '&:hover': {
-                  border: '1px solid #66bb6a',
-                  boxShadow: '1px 1px 0px #2c2c2c'
-                },
-                '&.Mui-focused': {
-                  border: '1px solid #66bb6a',
-                  boxShadow: '1px 1px 0px #2c2c2c'
-                }
-              },
-              '& .MuiInputLabel-root': {
-                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                letterSpacing: '-0.02em',
-                textTransform: 'lowercase',
-                fontWeight: 300,
-                color: '#1a1a1a'
-              }
-            }}
+            className="input"
           />
           <TextField
             fullWidth
@@ -183,36 +124,11 @@ export default function AddReview({ productId, onReviewAdded }: AddReviewProps) 
             value={authorEmail}
             onChange={(e) => setAuthorEmail(e.target.value)}
             required
-            sx={{ 
-              mb: 2,
-              '& .MuiOutlinedInput-root': {
-                borderRadius: 0,
-                border: '1px solid #2c2c2c',
-                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                letterSpacing: '-0.02em',
-                textTransform: 'lowercase',
-                fontWeight: 300,
-                '&:hover': {
-                  border: '1px solid #66bb6a',
-                  boxShadow: '1px 1px 0px #2c2c2c'
-                },
-                '&.Mui-focused': {
-                  border: '1px solid #66bb6a',
-                  boxShadow: '1px 1px 0px #2c2c2c'
-                }
-              },
-              '& .MuiInputLabel-root': {
-                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                letterSpacing: '-0.02em',
-                textTransform: 'lowercase',
-                fontWeight: 300,
-                color: '#1a1a1a'
-              }
-            }}
+            className="input"
           />
         </Box>
 
-        <Box sx={{ mb: 3 }}>
+        <Box className="review-form-field review-field input input--light">
           <TextField
             fullWidth
             label="your review (optional)"
@@ -221,31 +137,7 @@ export default function AddReview({ productId, onReviewAdded }: AddReviewProps) 
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="share your experience with this product..."
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: 0,
-                border: '1px solid #2c2c2c',
-                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                letterSpacing: '-0.02em',
-                textTransform: 'lowercase',
-                fontWeight: 300,
-                '&:hover': {
-                  border: '1px solid #66bb6a',
-                  boxShadow: '1px 1px 0px #2c2c2c'
-                },
-                '&.Mui-focused': {
-                  border: '1px solid #66bb6a',
-                  boxShadow: '1px 1px 0px #2c2c2c'
-                }
-              },
-              '& .MuiInputLabel-root': {
-                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                letterSpacing: '-0.02em',
-                textTransform: 'lowercase',
-                fontWeight: 300,
-                color: '#1a1a1a'
-              }
-            }}
+            className="input"
           />
         </Box>
 
@@ -253,31 +145,7 @@ export default function AddReview({ productId, onReviewAdded }: AddReviewProps) 
           type="submit"
           variant="contained"
           disabled={isSubmitting || rating === 0}
-          sx={{ 
-            minWidth: 120,
-            textTransform: "uppercase",
-            fontWeight: 800,
-            fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-            letterSpacing: '0.05em',
-            borderRadius: 0,
-            backgroundColor: '#1a1a1a',
-            color: '#ffffff',
-            border: '2px solid #2c2c2c',
-            boxShadow: '3px 3px 0px #66bb6a',
-            '&:hover': { 
-              backgroundColor: '#66bb6a',
-              color: '#ffffff',
-              transform: 'translateY(-1px) translateX(-1px)',
-              boxShadow: '4px 4px 0px #1a1a1a',
-              borderColor: '#66bb6a'
-            },
-            '&.Mui-disabled': { 
-              backgroundColor: '#cccccc',
-              color: '#666666',
-              border: '2px solid #cccccc',
-              boxShadow: 'none'
-            }
-          }}
+          className="btn btn--dark"
         >
           {isSubmitting ? (
             <CircularProgress size={20} color="inherit" />

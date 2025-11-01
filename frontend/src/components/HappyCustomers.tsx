@@ -26,9 +26,12 @@ interface HappyCustomersProps {
 export default function HappyCustomers({ reviews, subtitle }: HappyCustomersProps) {
   const items = reviews?.slice(0, 12) || [];
   const theme = useTheme();
-  const mdUp = useMediaQuery(theme.breakpoints.up('md'));
-  const lgUp = useMediaQuery(theme.breakpoints.up('lg'));
+  // Avoid SSR/client mismatch that caused layout jumps on first paint
+  const mdUp = useMediaQuery(theme.breakpoints.up('md'), { noSsr: true });
+  const lgUp = useMediaQuery(theme.breakpoints.up('lg'), { noSsr: true });
   const columns = lgUp ? 3 : mdUp ? 2 : 1;
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
 
   // Масив аватарок для відгуків
   const avatarImages = [
@@ -118,32 +121,18 @@ export default function HappyCustomers({ reviews, subtitle }: HappyCustomersProp
     return () => clearInterval(interval);
   }, [isAutoScrolling, items.length, columns]);
 
+  if (!mounted) return null;
   return (
-    <Box sx={{ 
-      py: { xs: 4, md: 6 }, 
-      px: { xs: '1rem', md: '2.5rem' }, 
-      bgcolor: '#f7faf7',
-        // Зменшуємо відступи по боках
-        '& .happy-customers-container': {
-          paddingTop: { xs: '1rem', md: '2.5rem' },
-          paddingBottom: { xs: '1rem', md: '2.5rem' },
-          paddingLeft: { xs: '1rem', md: '5%', lg: '2%' },
-          paddingRight: { xs: '1rem', md: '5%', lg: '2%' }
-        }
-    }}>
+    <Box className="happy-root">
       <Container maxWidth="lg" className="happy-customers-container">
         <Typography 
           component="h2"
-          className="section-title hipster-heading hipster-h1"
-          sx={{
-            textAlign: 'center',
-            mb: 2
-          }}
+          className="happy-title"
         >
           Sharing happiness.
         </Typography>
         {subtitle ? (
-          <Typography component="p" className={styles.subtitle} sx={{ mb: 10 }}>
+          <Typography component="p" className={`happy-subtitle`}>
             {subtitle}
           </Typography>
         ) : null}
@@ -163,195 +152,61 @@ export default function HappyCustomers({ reviews, subtitle }: HappyCustomersProp
           onTouchEnd={() => {
             setTimeout(() => setIsAutoScrolling(true), 2000);
           }}
-          sx={{
-          display: 'grid',
-          gridAutoFlow: 'column',
-          gap: 2,
-          gridAutoColumns: columns === 3 ? 'calc((100% - 2 * 16px) / 3)' : (columns === 2 ? 'calc((100% - 16px) / 2)' : '100%'),
-          overflowX: 'auto',
-          scrollSnapType: 'x mandatory',
-          scrollbarWidth: 'none',
-          '&::-webkit-scrollbar': { display: 'none' },
-          px: 0.5,
-          alignItems: 'stretch',
-        }}>
+          className={`happy-scroller happy-scroller--${columns}`}>
           {/* First set of items */}
           {items.map((r) => (
-            <Box key={r.documentId} sx={{ scrollSnapAlign: 'start', height: '100%' }}>
-              <Link href={r.product?.slug ? `/catalog/${r.product.slug}` : '#'} style={{ textDecoration: 'none' }}>
-              <Box data-review-card sx={{ 
-                position: 'relative', 
-                p: { xs: 3, md: 3.25 }, 
-                bgcolor: '#f8f9fa', 
-                border: '2px solid #2c2c2c', 
-                borderRadius: 0, 
-                height: { xs: 280, md: 300 }, 
-                display: 'flex', 
-                flexDirection: 'column', 
-                overflow: 'hidden', 
-                boxShadow: '4px 4px 0px #2c2c2c', 
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  transform: 'translateY(-2px) translateX(-2px)',
-                  boxShadow: '6px 6px 0px #66bb6a',
-                  borderColor: '#66bb6a'
-                }
-              }}>
+          <Box key={r.documentId} className="happy-item">
+              <Link href={r.product?.slug ? `/catalog/${r.product.slug}` : '#'} className="link-unstyled">
+              <Box data-review-card className="happy-card">
                 {/* Review content with decorative quotes */}
-                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', mb: 2, position: 'relative', pl: 3, pr: 3 }}>
+                <Box className="happy-card-content">
                   {/* Opening quote */}
-                  <Box sx={{
-                    position: 'absolute',
-                    top: '-0.5rem',
-                    left: '0.5rem',
-                    width: '1.25rem',
-                    height: '1.25rem',
-                    bgcolor: '#2c2c2c',
-                    color: '#ffffff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.8rem',
-                    fontWeight: 800,
-                    fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                    border: '1px solid #2c2c2c',
-                    boxShadow: '1px 1px 0px #1a1a1a',
-                    zIndex: 2
-                  }}>
+                  <Box className="happy-quote-open">
                     "
                   </Box>
 
                   {/* Closing quote */}
-                  <Box sx={{
-                    position: 'absolute',
-                    bottom: '-0.5rem',
-                    right: '0.5rem',
-                    width: '1rem',
-                    height: '1rem',
-                    bgcolor: '#2c2c2c',
-                    color: '#ffffff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.7rem',
-                    fontWeight: 800,
-                    fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                    border: '1px solid #2c2c2c',
-                    boxShadow: '1px 1px 0px #1a1a1a',
-                    zIndex: 2
-                  }}>
+                  <Box className="happy-quote-close">
                     "
                   </Box>
 
                   {r.comment && (
-                    <Typography variant="body2" sx={{ 
-                      color: '#1a1a1a', 
-                      fontSize: { xs: '0.85rem', md: '0.9rem' }, 
-                      fontWeight: 400, 
-                      lineHeight: 1.6, 
-                      letterSpacing: '0.02em', 
-                      mb: 2,
-                      display: '-webkit-box', 
-                      WebkitLineClamp: 4, 
-                      WebkitBoxOrient: 'vertical', 
-                      overflow: 'hidden', 
-                      textOverflow: 'ellipsis',
-                      flex: 1,
-                      fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif'
-                    }}>
+                  <Typography variant="body2" className="happy-comment">
                       {r.comment}
                     </Typography>
                   )}
                 </Box>
 
                 {/* Footer with user info and rating */}
-                <Box sx={{ 
-                  pt: 2,
-                  borderTop: '2px solid #2c2c2c',
-                  flexShrink: 0
-                }}>
+                <Box className="happy-card-footer">
                   {/* User info row */}
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
+                  <Box className="happy-user-row">
                     <Box
                       component="img"
                       src={getRandomAvatar(r.documentId)}
                       alt={r.authorName}
-                      sx={{
-                        width: 36,
-                        height: 36,
-                        borderRadius: '50%',
-                        objectFit: 'cover',
-                        border: '2px solid #2c2c2c'
-                      }}
+                      className="happy-avatar"
                     />
-                    <Box sx={{ minWidth: 0, flex: 1 }}>
-                      <Typography variant="subtitle2" sx={{ 
-                        fontWeight: 800, 
-                        lineHeight: 1.2,
-                        color: '#1a1a1a',
-                        mb: 0.25,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                        textTransform: 'lowercase',
-                        letterSpacing: '0.01em',
-                        fontSize: '0.9rem'
-                      }}>
+                    <Box style={{ minWidth: 0, flex: 1 }}>
+                      <Typography variant="subtitle2" className="happy-user-name">
                         {r.authorName}
                       </Typography>
-                      <Typography variant="caption" sx={{ 
-                        color: '#666666',
-                        fontSize: '0.7rem',
-                        fontWeight: 500,
-                        fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                        textTransform: 'lowercase',
-                        letterSpacing: '0.02em'
-                      }}>
+                      <Typography variant="caption" className="happy-user-date">
                         {new Date(r.createdAt || new Date().toISOString()).toLocaleDateString('uk-UA', { year: 'numeric', month: 'short' })}
                       </Typography>
                     </Box>
                   </Box>
 
                   {/* Product and rating row */}
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Box className="happy-product-row">
                     {r.product?.title && (
-                      <Typography variant="caption" sx={{ 
-                        color: '#1a1a1a', 
-                        fontWeight: 800, 
-                        maxWidth: '60%', 
-                        whiteSpace: 'nowrap', 
-                        overflow: 'hidden', 
-                        textOverflow: 'ellipsis',
-                        fontSize: '0.8rem',
-                        fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                        textTransform: 'lowercase',
-                        letterSpacing: '0.02em'
-                      }}>
+                      <Typography variant="caption" className="happy-product-title">
                         {formatTeaTitle(r.product.title)}
                       </Typography>
                     )}
-                    <Box sx={{ 
-                      display: 'inline-flex', 
-                      alignItems: 'center', 
-                      gap: 0.5, 
-                      px: 1.25, 
-                      py: 0.5, 
-                      borderRadius: 0, 
-                      bgcolor: '#1a1a1a', 
-                      border: '2px solid #2c2c2c',
-                      boxShadow: '2px 2px 0px #2c2c2c',
-                      flexShrink: 0
-                    }}>
-                      <StarRoundedIcon sx={{ color: '#ffffff', fontSize: '0.75rem' }} />
-                      <Typography variant="caption" sx={{ 
-                        fontWeight: 800, 
-                        color: '#ffffff',
-                        fontSize: '0.7rem',
-                        fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.05em'
-                      }}>
+                    <Box className="happy-rating-badge">
+                      <StarRoundedIcon className="happy-rating-star" />
+                      <Typography variant="caption" className="happy-rating-value">
                         {(Number(r.rating) || 0).toFixed(1)}
                       </Typography>
                     </Box>
@@ -364,178 +219,56 @@ export default function HappyCustomers({ reviews, subtitle }: HappyCustomersProp
           
           {/* Duplicate set for seamless loop */}
           {items.map((r) => (
-            <Box key={`duplicate-${r.documentId}`} sx={{ scrollSnapAlign: 'start', height: '100%' }}>
-              <Link href={r.product?.slug ? `/catalog/${r.product.slug}` : '#'} style={{ textDecoration: 'none' }}>
-              <Box data-review-card sx={{ 
-                position: 'relative', 
-                p: { xs: 3, md: 3.25 }, 
-                bgcolor: '#f8f9fa', 
-                border: '2px solid #2c2c2c', 
-                borderRadius: 0, 
-                boxShadow: '4px 4px 0px #2c2c2c', 
-                transition: 'all 0.3s ease', 
-                height: '100%', 
-                display: 'flex', 
-                flexDirection: 'column',
-                '&:hover': { 
-                  transform: 'translateY(-2px) translateX(-2px)', 
-                  boxShadow: '6px 6px 0px #66bb6a', 
-                  borderColor: '#66bb6a' 
-                } 
-              }}>
+            <Box key={`duplicate-${r.documentId}`} className="happy-item">
+              <Link href={r.product?.slug ? `/catalog/${r.product.slug}` : '#'} className="link-unstyled">
+              <Box data-review-card className="happy-card" style={{ height: '100%' }}>
                 {/* Review content with quotes */}
-                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', mb: 2, position: 'relative', pl: 3, pr: 3 }}>
+                <Box className="happy-card-content">
                   {/* Opening quote */}
-                  <Box sx={{
-                    position: 'absolute',
-                    top: '-0.5rem',
-                    left: '0.5rem',
-                    width: '1.25rem',
-                    height: '1.25rem',
-                    bgcolor: '#2c2c2c',
-                    color: '#ffffff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.8rem',
-                    fontWeight: 800,
-                    fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                    border: '1px solid #2c2c2c',
-                    boxShadow: '1px 1px 0px #1a1a1a',
-                    zIndex: 2
-                  }}>
+                  <Box className="happy-quote-open">
                     "
                   </Box>
 
                   {/* Closing quote */}
-                  <Box sx={{
-                    position: 'absolute',
-                    bottom: '-0.5rem',
-                    right: '0.5rem',
-                    width: '1rem',
-                    height: '1rem',
-                    bgcolor: '#2c2c2c',
-                    color: '#ffffff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.7rem',
-                    fontWeight: 800,
-                    fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                    border: '1px solid #2c2c2c',
-                    boxShadow: '1px 1px 0px #1a1a1a',
-                    zIndex: 2
-                  }}>
+                  <Box className="happy-quote-close">
                     "
                   </Box>
 
                   {r.comment && (
-                    <Typography variant="body2" sx={{ 
-                      color: '#1a1a1a', 
-                      fontSize: { xs: '0.85rem', md: '0.9rem' }, 
-                      fontWeight: 400, 
-                      lineHeight: 1.6, 
-                      letterSpacing: '0.02em', 
-                      mb: 2,
-                      display: '-webkit-box', 
-                      WebkitLineClamp: 4, 
-                      WebkitBoxOrient: 'vertical', 
-                      overflow: 'hidden', 
-                      textOverflow: 'ellipsis',
-                      flex: 1,
-                      fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif'
-                    }}>
+                    <Typography variant="body2" className="happy-comment">
                       {r.comment}
                     </Typography>
                   )}
                 </Box>
 
                 {/* Footer with border */}
-                <Box sx={{ 
-                  borderTop: '2px solid #2c2c2c', 
-                  pt: 2, 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  gap: 1.5 
-                }}>
+                <Box className="happy-card-footer" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {/* First row: reviewer info */}
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <Box className="happy-user-row">
                     <Box component="img" 
                       src={getRandomAvatar(r.documentId)} 
                       alt="Reviewer avatar" 
-                      sx={{ 
-                        width: 36, 
-                        height: 36, 
-                        borderRadius: '50%', 
-                        objectFit: 'cover',
-                        border: '2px solid #2c2c2c'
-                      }} 
+                      className="happy-avatar"
                     />
-                    <Box sx={{ flex: 1, minWidth: 0 }}>
-                      <Typography variant="body2" sx={{ 
-                        fontWeight: 800, 
-                        color: '#1a1a1a', 
-                        fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                        textTransform: 'lowercase',
-                        letterSpacing: '0.01em',
-                        fontSize: '0.9rem',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap'
-                      }}>
+                    <Box style={{ flex: 1, minWidth: 0 }}>
+                      <Typography variant="body2" className="happy-user-name">
                         {r.authorName || 'Anonymous'}
                       </Typography>
-                      <Typography variant="caption" sx={{ 
-                        color: '#666666', 
-                        fontSize: '0.7rem', 
-                        fontWeight: 500,
-                        fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                        textTransform: 'lowercase',
-                        letterSpacing: '0.02em'
-                      }}>
+                      <Typography variant="caption" className="happy-user-date">
                         {r.createdAt ? new Date(r.createdAt).toLocaleDateString() : ''}
                       </Typography>
                     </Box>
-                    <Box sx={{ 
-                      px: 1.25, 
-                      py: 0.5, 
-                      borderRadius: 0, 
-                      bgcolor: '#1a1a1a', 
-                      border: '2px solid #2c2c2c', 
-                      boxShadow: '2px 2px 0px #2c2c2c',
-                      flexShrink: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 0.5
-                    }}>
-                      <StarRoundedIcon sx={{ color: '#ffffff', fontSize: '0.75rem' }} />
-                      <Typography variant="caption" sx={{ 
-                        fontWeight: 800, 
-                        color: '#ffffff', 
-                        fontSize: '0.7rem',
-                        fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.05em'
-                      }}>
+                    <Box className="happy-rating-badge">
+                      <StarRoundedIcon className="happy-rating-star" />
+                      <Typography variant="caption" className="happy-rating-value">
                         {r.rating || 0}
                       </Typography>
                     </Box>
                   </Box>
 
                   {/* Second row: product title */}
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Typography variant="body2" sx={{ 
-                      color: '#1a1a1a', 
-                      fontWeight: 800, 
-                      maxWidth: '60%',
-                      fontSize: '0.8rem',
-                      fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                      textTransform: 'lowercase',
-                      letterSpacing: '0.02em',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap'
-                    }}>
+                  <Box className="happy-product-row">
+                    <Typography variant="body2" className="happy-product-title">
                       {r.product?.title ? truncateTitle(r.product.title) : 'Unknown Product'}
                     </Typography>
                   </Box>
@@ -547,7 +280,7 @@ export default function HappyCustomers({ reviews, subtitle }: HappyCustomersProp
         </Box>
         {/* Pagination tiles */}
         {items.length > 0 && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1.5, mt: 3 }}>
+          <Box className="happy-pagination">
             {Array.from({ length: pageCount }).map((_, i) => (
               <Box 
                 key={i} 
@@ -561,21 +294,7 @@ export default function HappyCustomers({ reviews, subtitle }: HappyCustomersProp
                   setActivePage(i);
                   setTimeout(() => setIsAutoScrolling(true), 3000);
                 }} 
-                sx={{ 
-                  width: 32, 
-                  height: 8, 
-                  borderRadius: 0, 
-                  bgcolor: i === activePage ? '#1a1a1a' : '#f8f9fa', 
-                  border: '2px solid #2c2c2c',
-                  boxShadow: i === activePage ? '2px 2px 0px #66bb6a' : '2px 2px 0px #2c2c2c',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  '&:hover': {
-                    transform: 'translateY(-1px) translateX(-1px)',
-                    boxShadow: i === activePage ? '3px 3px 0px #66bb6a' : '3px 3px 0px #1a1a1a',
-                    borderColor: i === activePage ? '#66bb6a' : '#1a1a1a'
-                  }
-                }} 
+                className={`happy-page-dot ${i === activePage ? 'happy-page-dot--active' : ''}`}
               />
             ))}
           </Box>

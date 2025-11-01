@@ -44,6 +44,7 @@ export default function ProductPage() {
     const [product, setProduct] = useState<Product | null>(null);
     const [quantity, setQuantity] = useState(1);
     const [refreshReviews, setRefreshReviews] = useState(0);
+    const [isDescExpanded, setIsDescExpanded] = useState(false);
     const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
     // Add product page class to body
@@ -100,111 +101,45 @@ export default function ProductPage() {
     };
 
     return (
-        <Box sx={{ 
-            bgcolor: '#ffffff',
-            minHeight: '100vh',
-            position: 'relative'
-        }}>
-            <Box sx={{ 
-                maxWidth: '100%', 
-                mx: 'auto', 
-                px: { xs: '1.25rem', sm: '15%', md: '25%' }, 
-                py: { xs: '1.875rem', md: '5rem' },
-                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif'
-            }}>
+        <Box className="product-page-root">
+            <Box className="product-page-container">
                     {/* Breadcrumb Navigation */}
-                    <Box sx={{ 
-                        mb: 3,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 1,
-                        fontSize: '0.875rem',
-                        color: '#1a1a1a',
-                        fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                        letterSpacing: '-0.02em',
-                        textTransform: 'lowercase',
-                        fontWeight: 300
-                    }}>
-                        <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-                            <Typography variant="body2" sx={{ 
-                                fontSize: '0.875rem', 
-                                color: '#1a1a1a',
-                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                letterSpacing: '-0.02em',
-                                textTransform: 'lowercase',
-                                fontWeight: 300
-                            }}>
+                    <Box className="product-breadcrumbs">
+                        <Link href="/" className="link-unstyled">
+                            <Typography variant="body2" className="breadcrumb-text">
                                 home
                             </Typography>
                         </Link>
-                        <ChevronRightIcon sx={{ fontSize: '1rem', color: '#9e9e9e' }} />
-                        <Link href="/catalog" style={{ textDecoration: 'none', color: 'inherit' }}>
-                            <Typography variant="body2" sx={{ 
-                                fontSize: '0.875rem', 
-                                color: '#1a1a1a',
-                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                letterSpacing: '-0.02em',
-                                textTransform: 'lowercase',
-                                fontWeight: 300
-                            }}>
+                        <ChevronRightIcon className="icon-chevron" />
+                        <Link href="/catalog" className="link-unstyled">
+                            <Typography variant="body2" className="breadcrumb-text">
                                 catalog
                             </Typography>
                         </Link>
-                        <ChevronRightIcon sx={{ fontSize: '1rem', color: '#9e9e9e' }} />
+                        <ChevronRightIcon className="icon-chevron" />
                         {product?.category && (
                             <>
-                                <Link href={`/catalog?category=${product.category.documentId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    <Typography variant="body2" sx={{ 
-                                        fontSize: '0.875rem', 
-                                        color: '#1a1a1a',
-                                        fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                        letterSpacing: '-0.02em',
-                                        textTransform: 'lowercase',
-                                        fontWeight: 300
-                                    }}>
+                                <Link href={`/catalog?category=${product.category.documentId}`} className="link-unstyled">
+                                    <Typography variant="body2" className="breadcrumb-text">
                                         {product.category.name}
                                     </Typography>
                                 </Link>
-                                <ChevronRightIcon sx={{ fontSize: '1rem', color: '#9e9e9e' }} />
+                                <ChevronRightIcon className="icon-chevron" />
                             </>
                         )}
-                        <Typography variant="body2" sx={{ 
-                            fontSize: '0.875rem', 
-                            color: '#1a1a1a', 
-                            fontWeight: 300,
-                            fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                            letterSpacing: '-0.02em',
-                            textTransform: 'lowercase'
-                        }}>
+                        <Typography variant="body2" className="breadcrumb-text">
                             {product?.title || 'product'}
                         </Typography>
                     </Box>
 
                     {/* Main Product Block - Clean */}
-                <Box className="product-page-card" sx={{ 
-                    border: '1px solid #e0e0e0',
-                    borderRadius: 0,
-                    p: { xs: '1.5rem', md: '2rem' },
-                    bgcolor: '#ffffff',
-                    boxShadow: '0 0.125rem 0.5rem rgba(0, 0, 0, 0.08)',
-                    mb: 4
-                }}>
-                    <Grid container spacing={4} className="product-page-card-content" sx={{ height: 'auto' }}>
+                <Box className="product-page-card product-page-card-padding">
+                    <Grid container spacing={4} className="product-page-card-content">
                         {/* Left Panel - Product Image */}
-                        <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 1 } }}>
+                        <Grid size={{ xs: 12, md: 6 }}>
                             <Box className="product-page-image-panel">
                                     {/* Main Image Container */}
-                                    <Box className="product-card-image-container" sx={{ 
-                                        width: '100%',
-                                        height: { xs: '25rem', md: '35rem' },
-                                        position: 'relative',
-                                        overflow: 'hidden',
-                                        borderRadius: '0.5rem',
-                                        boxShadow: 'none !important',
-                                        flex: 1,
-                                        backgroundColor: '#ffffff !important',
-                                        border: 'none !important'
-                                    }}>
+                                    <Box className="product-card-image-container product-image-main">
                                 {sliderImages.length > 0 ? (
                                     <>
                                         {/* Current Slide */}
@@ -217,31 +152,12 @@ export default function ProductPage() {
                                             decoding="async"
                                             fetchPriority="low"
                                             className={`product-card-image ${imgAnim.imgEnter}`}
-                                            sx={{ 
-                                                height: '100%',
-                                                width: '100%', 
-                                                objectFit: 'contain',
-                                                objectPosition: 'center',
-                                                position: 'absolute',
-                                                top: 0,
-                                                left: 0,
-                                                transition: 'opacity 0.3s ease'
-                                            }}
+                                            style={{}}
+                                            classes={{ root: 'product-image-absolute' as any }}
                                         />
                                     </>
                                 ) : (
-                                    <Box sx={{ 
-                                        width: '100%', 
-                                        height: '100%', 
-                                        display: 'flex', 
-                                        alignItems: 'center', 
-                                        justifyContent: 'center', 
-                                        color: '#3b4d3c',
-                                        bgcolor: 'grey.50',
-                                        position: 'absolute',
-                                        top: 0,
-                                        left: 0
-                                    }}>
+                                    <Box className="product-image-empty">
                                         <Box component="svg" width={120} height={120} viewBox="0 0 64 64" fill="none">
                                             <circle cx="32" cy="32" r="30" fill="#f5f9f5"/>
                                             <g fill="currentColor">
@@ -257,34 +173,14 @@ export default function ProductPage() {
 
                                 {/* Thumbnails Container - Only show if more than 1 image */}
                                 {sliderImages.length > 1 && (
-                                    <Box sx={{ 
-                                        display: 'flex',
-                                        gap: 1,
-                                        justifyContent: 'center',
-                                        flexWrap: 'wrap'
-                                    }}>
+                                    <Box className="product-thumbs">
                                     {sliderImages.map((img, idx) => (
                                         <Box
                                             key={`${img.url}-${idx}`}
                                             onClick={() => setCurrentImageIdx(idx)}
                                             onMouseDown={() => setCurrentImageIdx(idx)}
                                             onTouchStart={() => setCurrentImageIdx(idx)}
-                                            className="product-card"
-                                            sx={{
-                                                width: { xs: '3.5rem', md: '4.5rem' },
-                                                height: { xs: '3.5rem', md: '4.5rem' },
-                                                border: '1px solid',
-                                                borderColor: idx === currentImageIdx ? '#3b4d3c' : '#e0e0e0',
-                                                cursor: 'pointer',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                '&:hover': {
-                                                    transform: 'translateY(-0.25rem)',
-                                                    boxShadow: '0 0.5rem 1.5625rem rgba(0, 0, 0, 0.15)',
-                                                    borderColor: '#3b4d3c'
-                                                }
-                                            }}
+                                            className={`product-thumb ${idx === currentImageIdx ? 'product-thumb--active' : ''}`}
                                         >
                                             <CardMedia
                                                 component="img"
@@ -294,11 +190,6 @@ export default function ProductPage() {
                                                 decoding="async"
                                                 fetchPriority="low"
                                                 className="product-card-image"
-                                                sx={{
-                                                    maxWidth: '100%',
-                                                    maxHeight: '100%',
-                                                    objectFit: 'contain'
-                                                }}
                                             />
                                         </Box>
                                     ))}
@@ -308,89 +199,38 @@ export default function ProductPage() {
                     </Grid>
                     
                             {/* Right Panel - Product Info */}
-                            <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 2, md: 2 } }}>
-                                <Box sx={{ 
-                                    pl: { md: 4 },
-                                    height: '100%',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'space-between',
-                                    gap: 2
-                                }}>
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <Box className="product-info-panel">
                                     {/* Top Section - Header, Price, Description */}
-                                    <Box sx={{ 
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        gap: 2
-                                    }}>
+                                    <Box className="product-header">
                                         {/* Header Section */}
-                                        <Box sx={{ 
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            gap: 0.5
-                                        }}>
+                                        <Box className="product-header">
                             <Typography 
                                 variant="body2" 
-                                sx={{ 
-                                    fontSize: '0.75rem',
-                                    fontWeight: 300,
-                                    textTransform: 'lowercase',
-                                    letterSpacing: '-0.02em',
-                                    color: '#1a1a1a',
-                                    fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif'
-                                }}
+                                className="product-category"
                             >
                                 {product.category?.name || 'blends'}
                             </Typography>
                             
                             <Typography 
                                 variant="h1" 
-                                sx={{ 
-                                    fontSize: { xs: '2rem', md: '2.5rem' },
-                                    fontWeight: 300,
-                                    fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                    letterSpacing: '-0.02em',
-                                    textTransform: 'lowercase',
-                                    lineHeight: 0.9,
-                                    color: '#1a1a1a'
-                                }}
+                                className="hipster-heading product-title"
                             >
                                 {product.title}
                             </Typography>
                                         </Box>
                             
                             {/* Price - 3D Style */}
-                                        <Box sx={{ 
-                                            display: 'flex', 
-                                            alignItems: 'baseline', 
-                                            gap: 1, 
-                                            bgcolor: '#f8f9fa',
-                                            p: '1rem 1.25rem',
-                                            borderRadius: 0,
-                                            border: '2px solid #2c2c2c',
-                                            boxShadow: '2px 2px 0px #66bb6a'
-                                        }}>
+                                        <Box className="product-price-box">
                                 <Typography 
                                     variant="h3" 
-                                    sx={{ 
-                                        fontSize: { xs: '1.25rem', md: '1.5rem' },
-                                        fontWeight: 300,
-                                        color: '#1a1a1a',
-                                        fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                        letterSpacing: '-0.02em'
-                                    }}
+                                    className="hipster-heading product-price"
                                 >
                                     ${product.price.toFixed(2)}
                                 </Typography>
                                             <Typography 
                                                 variant="body2" 
-                                                sx={{ 
-                                                    color: '#1a1a1a',
-                                                    fontWeight: 300,
-                                                    fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                    letterSpacing: '-0.02em',
-                                                    textTransform: 'lowercase'
-                                                }}
+                                                className="product-price-unit"
                                             >
                                                 / 100g
                                             </Typography>
@@ -399,149 +239,131 @@ export default function ProductPage() {
                                         {/* Description Section - Simple Gradient */}
                             <Typography 
                                 variant="body1" 
-                                sx={{ 
-                                    fontSize: '0.875rem',
-                                    lineHeight: 1.6,
-                                    fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                    letterSpacing: '-0.02em',
-                                    textTransform: 'lowercase',
-                                    fontWeight: 300,
-                                    color: '#4a4a4a'
-                                }}
+                                className={`product-description ${isDescExpanded ? 'product-description--expanded' : 'product-description--clamp'}`}
                             >
-                                {product.description || "a proprietary blend of cripple creek whole-leaf ceylon, certified organic herbs, and spices. a chai-lover's dream."}
+                                {product.description || "hand‑picked whole leaves with a clean, naturally sweet finish. small‑batch roasted for clarity in the cup."}
                             </Typography>
+                            {product.description && product.description.length > 280 && (
+                                <Button className="product-description-toggle" onClick={() => setIsDescExpanded(v => !v)}>
+                                    {isDescExpanded ? 'show less' : 'read more'}
+                                </Button>
+                            )}
+
+                            {/* Highlights */}
+                            <Box className="product-highlights">
+                                <div className="product-highlight-item">
+                                    <span className="product-highlight-icon" aria-hidden>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                    </span>
+                                    <span className="product-highlight-text">ethically sourced from small farms</span>
+                                </div>
+                                <div className="product-highlight-item">
+                                    <span className="product-highlight-icon" aria-hidden>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 1l3 7h7l-5.5 4 2 7L12 16l-6.5 3 2-7L2 8h7l3-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                    </span>
+                                    <span className="product-highlight-text">fresh roast & packed for peak flavour</span>
+                                </div>
+                                <div className="product-highlight-item">
+                                    <span className="product-highlight-icon" aria-hidden>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12l2-2 4 4 10-10 2 2-12 12-6-6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                    </span>
+                                    <span className="product-highlight-text">plastic‑free, recyclable packaging</span>
+                                </div>
+                                <div className="product-highlight-item">
+                                    <span className="product-highlight-icon" aria-hidden>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                    </span>
+                                    <span className="product-highlight-text">30‑day satisfaction guarantee</span>
+                                </div>
+                            </Box>
                                     </Box>
                                     
                                     {/* Bottom Section - Quantity and Actions */}
-                                    <Box sx={{ 
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        gap: 2
-                                    }}>
+                                    <Box className="product-actions">
                                 {/* Quantity Selector - Clean */}
-                                        <Box sx={{ 
-                                            display: 'flex', 
-                                            alignItems: 'center', 
-                                            gap: 2
-                                        }}>
-                                <Box sx={{ 
-                                    display: 'flex', 
-                                    alignItems: 'center',
-                                    border: '1px solid #e0e0e0',
-                                    borderRadius: 0,
-                                    bgcolor: '#ffffff'
-                                }}>
+                                        <Box className="product-qty-row">
+                                <Box className="product-qty-box">
                                     <IconButton 
                                         onClick={() => handleQuantityChange(-1)}
-                                        sx={{ 
-                                            borderRadius: 0,
-                                            borderRight: '1px solid #e0e0e0',
-                                            minWidth: '2.5rem',
-                                            height: '2.5rem',
-                                            color: '#1a1a1a',
-                                            '&:hover': {
-                                                bgcolor: '#f8f9fa'
-                                            }
-                                        }}
+                                        className="product-qty-btn product-qty-btn--left"
                                     >
-                                        <RemoveIcon sx={{ fontSize: '1rem' }} />
+                                        <RemoveIcon fontSize="small" />
                                     </IconButton>
                                     
-                                    <Box sx={{ 
-                                        px: '1.25rem', 
-                                        py: '0.625rem', 
-                                        minWidth: '3.75rem', 
-                                        textAlign: 'center',
-                                        borderRight: '1px solid #e0e0e0'
-                                    }}>
-                                        <Typography sx={{ 
-                                            fontSize: '0.875rem', 
-                                            fontWeight: 500,
-                                            fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                            color: '#1a1a1a'
-                                        }}>
+                                    <Box className="product-qty-count">
+                                        <Typography className="product-qty-count-text">
                                             {quantity.toString().padStart(2, '0')}
                                         </Typography>
                                     </Box>
                                     
                                     <IconButton 
                                         onClick={() => handleQuantityChange(1)}
-                                        sx={{ 
-                                            borderRadius: 0,
-                                            minWidth: '2.5rem',
-                                            height: '2.5rem',
-                                            color: '#1a1a1a',
-                                            '&:hover': {
-                                                bgcolor: '#f8f9fa'
-                                            }
-                                        }}
+                                        className="product-qty-btn"
                                     >
-                                        <AddIcon sx={{ fontSize: '1rem' }} />
+                                        <AddIcon fontSize="small" />
                                     </IconButton>
                                 </Box>
                                 
                                 <Typography 
                                     variant="body2" 
-                                    sx={{ 
-                                        fontSize: '0.75rem',
-                                                    color: '#6b7c6b',
-                                                    fontWeight: 500
-                                    }}
+                                    className="product-qty-hint"
                                 >
-                                    Makes ~16 cups
+                                    {`makes ~${quantity * 16} ${quantity * 16 === 1 ? 'cup' : 'cups'}`}
                                 </Typography>
                             </Box>
                             
                                         {/* Add to Cart Button - 3D Style */}
                                 <Button
-                                            className="product-card-add-button"
+                                            className="btn btn--dark btn--block product-card-add-button product-add-button-wide"
                                     onClick={handleAdd}
-                                    sx={{
-                                        fontSize: '0.875rem',
-                                        fontWeight: 800,
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.05em',
-                                        px: '2.5rem',
-                                        py: '1.25rem',
-                                        width: '100%',
-                                        justifyContent: 'center',
-                                        backgroundColor: '#1a1a1a',
-                                        color: '#ffffff',
-                                        border: '2px solid #2c2c2c',
-                                        borderRadius: 0,
-                                        boxShadow: '3px 3px 0px #66bb6a',
-                                        fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                        '&:hover': {
-                                            backgroundColor: '#66bb6a',
-                                            color: '#ffffff',
-                                            borderColor: '#66bb6a',
-                                            transform: 'translateY(-1px) translateX(-1px)',
-                                            boxShadow: '4px 4px 0px #1a1a1a'
-                                        },
-                                        '&:active': {
-                                            transform: 'translateY(0) translateX(0)',
-                                            boxShadow: '3px 3px 0px #66bb6a'
-                                        }
-                                    }}
                                         >
-                                            + add to cart
+                                            add to cart
                                         </Button>
                                         </Box>
                         </Box>
                     </Grid>
                 </Grid>
                 </Box>
+
+                {/* Product marketing block */}
+                <Box className="product-marketing">
+                    <Box className="product-marketing-wrap">
+                        <Typography variant="h5" className="product-marketing-title">why choose guru tea?</Typography>
+                        <Box className="product-marketing-grid">
+                            <Box className="product-marketing-card">
+                                <Box className="product-marketing-icon" aria-hidden>
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                </Box>
+                                <Typography className="product-marketing-head">free shipping over $50</Typography>
+                                <Typography className="product-marketing-text">fast dispatch, tracked delivery on every order.</Typography>
+                            </Box>
+                            <Box className="product-marketing-card">
+                                <Box className="product-marketing-icon" aria-hidden>
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 1l3 7h7l-5.5 4 2 7L12 16l-6.5 3 2-7L2 8h7l3-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                </Box>
+                                <Typography className="product-marketing-head">4.8★ average rating</Typography>
+                                <Typography className="product-marketing-text">trusted by tea lovers — reviews you can taste.</Typography>
+                            </Box>
+                            <Box className="product-marketing-card">
+                                <Box className="product-marketing-icon" aria-hidden>
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 12l2-2 4 4 10-10 2 2-12 12-6-6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                </Box>
+                                <Typography className="product-marketing-head">ethically sourced</Typography>
+                                <Typography className="product-marketing-text">we work directly with small farms at fair prices.</Typography>
+                            </Box>
+                            <Box className="product-marketing-card">
+                                <Box className="product-marketing-icon" aria-hidden>
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                </Box>
+                                <Typography className="product-marketing-head">30‑day taste guarantee</Typography>
+                                <Typography className="product-marketing-text">not in love? we’ll make it right or refund you.</Typography>
+                            </Box>
+                        </Box>
+                    </Box>
+                </Box>
                 
                 {/* Reviews Section - Clean */}
-                <Box sx={{ 
-                    mt: 6,
-                    border: '1px solid #e0e0e0',
-                    borderRadius: 0,
-                    p: '1.5rem',
-                    bgcolor: '#ffffff',
-                    boxShadow: '0 0.125rem 0.5rem rgba(0, 0, 0, 0.08)'
-                }}>
+                <Box className="product-reviews-section">
                     <ReviewList 
                         reviews={product.reviews || []}
                         averageRating={calculateAverageRating(product.reviews || [])}

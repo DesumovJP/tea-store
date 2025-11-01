@@ -117,91 +117,41 @@ export default function CategoryCarousel({ items }: CategoryCarouselProps) {
   };
 
   return (
-    <Box sx={{ py: { xs: 3, md: 6 }, px: { xs: 2, md: '10%', lg: '15%' }, bgcolor: "#ffffff" }}>
-      <Typography variant="h5" align="center" sx={{ fontWeight: 700, mb: 3 }} className="section-title">
+    <Box className="cat-carousel-root" style={{ paddingTop: '12px', paddingBottom: '24px', paddingLeft: '2%', paddingRight: '2%' }}>
+      <Typography variant="h5" align="center" className="section-title" style={{ fontWeight: 700, marginBottom: 12 }}>
         Our Premium Tea
       </Typography>
-      <Container maxWidth={false} sx={{ position: "relative", p: 0 }} ref={containerRef}>
+      <Container maxWidth={false} className="cat-carousel-wrap" ref={containerRef}>
 
         {/* Scroller */}
         <Box
           ref={scrollerRef}
           onScroll={handleScroll}
-          sx={{
-            display: 'grid',
-            ...(isCarousel
-              ? (() => {
-                  const gap = theme.spacing(isMdUp ? 3 : 2); // px string
-                  const baseWidth = `calc((100% - ${(columns - 1)} * ${gap}) / ${columns})`;
-                  const scale = 1; // exact fit per requested columns
-                  const calcWidth = `calc(${baseWidth} * ${scale})`;
-                  return {
-                    gridAutoFlow: 'column',
-                    gridAutoColumns: calcWidth,
-                    overflowX: 'auto',
-                    scrollSnapType: 'x mandatory',
-                    scrollbarWidth: 'none',
-                    '&::-webkit-scrollbar': { display: 'none' },
-                  } as const;
-                })()
-              : {
-                  gridTemplateColumns: '1fr',
-                }),
-            justifyItems: 'center',
-            gap: { xs: 2, md: 3 },
-            px: 0,
+          className={`cat-carousel-scroller ${isCarousel ? 'flow' : 'grid'}`}
+          style={{
+            gap: isMdUp ? 24 : 16,
+            gridAutoColumns: isCarousel ? `calc((100% - ${(columns - 1)} * ${(isMdUp ? 24 : 16)}px) / ${columns})` : undefined,
           }}
         >
           {items.map((cat) => (
-            <Box key={cat.name} sx={{ p: 0, width: '100%', scrollSnapAlign: 'start' }}>
-              <Link href={cat.href} style={{ textDecoration: "none" }}>
-                <Box
-                  sx={{
-                    position: "relative",
-                    width: '100%',
-                    borderRadius: 1,
-                    overflow: "hidden",
-                    bgcolor: "transparent",
-                    border: 'none',
-                    cursor: 'pointer',
-                    transition: 'box-shadow 200ms ease, border-color 200ms ease',
-                    willChange: 'box-shadow',
-                    '&:hover': {
-                      boxShadow: '0 10px 24px rgba(0,0,0,0.15)',
-                    },
-                    '&:hover .image-dim': { opacity: 0 },
-                    '&:hover .view-text': { opacity: 1, transform: 'translateY(0)' },
-                  }}
-                  data-card
-                >
-                  <Box className="image-wrap" sx={{ position: 'relative', width: '100%', pt: '133%' }}>
+            <Box key={cat.name}>
+              <Link href={cat.href} className="catalog-product-card-link">
+                <Box className="cat-carousel-card" data-card>
+                  <Box className="cat-carousel-image-wrap">
                     {cat.image ? (
-                      <Box
-                        component="img"
-                        src={cat.image}
-                        alt={cat.alt || cat.name}
-                        sx={{
-                          position: 'absolute',
-                          inset: 0,
-                          width: '100%',
-                          height: '100%',
-                          display: 'block',
-                          objectFit: 'cover',
-                          objectPosition: 'center',
-                        }}
-                      />
+                      <Box component="img" src={cat.image} alt={cat.alt || cat.name} className="cat-carousel-image" />
                     ) : null}
                     {/* Hover dim overlay (default dimmed; clears on hover) */}
-                    <Box className="image-dim" sx={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)', opacity: 1, transition: 'opacity 180ms ease', pointerEvents: 'none' }} />
+                    <Box className="cat-carousel-dim" />
                     {/* Overlay content */}
-                    <Box sx={{ position: 'absolute', inset: 0, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', p: 2, textAlign: 'center', pointerEvents: 'none' }}>
-                    <Typography variant="h6" sx={{ fontWeight: 800, mb: 0.75, fontSize: { xs: '1.25rem', md: '1.5rem' } }}>
+                    <Box className="cat-carousel-overlay">
+                    <Typography variant="h6" className="cat-carousel-name">
                       {cat.name}
                     </Typography>
-                    <Typography variant="caption" sx={{ opacity: 0.95, mb: 1, fontSize: { xs: '0.95rem', md: '1.05rem' } }}>
+                    <Typography variant="caption" className="cat-carousel-sub">
                       Discover our {cat.name.toLowerCase()} selection.
                     </Typography>
-                    <Typography className="view-text" sx={{ fontSize: '1.2rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'underline', color: '#ffffff', opacity: 0, transform: 'translateY(6px)', transition: 'opacity 180ms ease, transform 180ms ease', mt: 1.5 }}>
+                    <Typography className="cat-carousel-view">
                       View
                     </Typography>
                     </Box>
@@ -213,18 +163,12 @@ export default function CategoryCarousel({ items }: CategoryCarouselProps) {
         </Box>
         {/* Slider tiles/pagination */}
         {pageCount > 1 && !isXlUp && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mt: 2 }}>
+          <Box className="cat-carousel-dots">
             {Array.from({ length: pageCount }).map((_, i) => (
               <Box
                 key={i}
                 onClick={() => goToPage(i)}
-                sx={{
-                  width: 24,
-                  height: 6,
-                  borderRadius: 2,
-                  bgcolor: i === activePage ? '#3b4d3c' : 'grey.400',
-                  cursor: 'pointer'
-                }}
+                className={`cat-carousel-dot ${i === activePage ? 'cat-carousel-dot--active' : ''}`}
               />
             ))}
           </Box>

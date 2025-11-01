@@ -613,7 +613,7 @@ export default function AdminPage() {
                     <Grid container spacing={3}>
                         {reviews.map((review) => (
                             <Grid key={review.documentId} size={{ xs: 12, md: 6 }}>
-                                <Card sx={{ 
+                                <Card className="admin-review-card" sx={{ 
                                     border: 'none',
                                     boxShadow: '0 4px 16px rgba(0,0,0,0)', /* reserve space */
                                     borderRadius: 2,

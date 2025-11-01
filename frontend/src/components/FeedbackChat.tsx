@@ -264,174 +264,65 @@ const FeedbackChat: React.FC = () => {
   };
 
   return (
-    <Box sx={{ position: 'fixed', bottom: '5%', right: '1rem', zIndex: 50, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5, maxWidth: 'calc(100vw - 2rem)', overflow: 'hidden' }}>
+    <Box className="feedback-root">
       {/* Chat Window */}
       {isOpen && (
         <Fade in={isOpen} timeout={300}>
           <Grow in={isOpen} timeout={400}>
             <Box>
-              <Paper elevation={6} sx={{ 
-                width: { xs: 'calc(100vw - 2rem)', sm: '420px', md: '450px' }, 
-                maxWidth: { xs: 'calc(100vw - 2rem)', sm: '420px', md: '450px' },
-                overflow: 'hidden',
-                borderRadius: 0, 
-                border: '3px solid', 
-                borderColor: '#2c2c2c', 
-                boxShadow: '4px 4px 0px #66bb6a, 0 8px 32px rgba(0, 0, 0, 0.2)',
-                maxHeight: '90vh',
-                minHeight: '400px',
-                display: 'flex',
-                flexDirection: 'column',
-                bgcolor: '#ffffff'
-              }}>
+              <Paper elevation={6} className="feedback-paper">
             {/* Header */}
-            <Box sx={{ 
-              bgcolor: '#f8f9fa', 
-              px: '6%', 
-              py: '4%', 
-              borderBottom: '3px solid', 
-              borderColor: '#2c2c2c', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'space-between' 
-            }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                <Box sx={{ 
-                  width: 12, 
-                  height: 12, 
-                  borderRadius: '50%', 
-                  bgcolor: isConnected ? '#66bb6a' : '#9e9e9e',
-                  border: '2px solid #2c2c2c'
-                }} />
+            <Box className="feedback-header">
+              <Box style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Box className={`feedback-status ${isConnected ? 'feedback-status--ok' : 'feedback-status--idle'}`} />
                 <Typography 
                   variant="h6" 
-                  className="hipster-heading"
-                  sx={{ 
-                    fontWeight: 300, 
-                    lineHeight: 0.9, 
-                    color: '#1a1a1a', 
-                    fontSize: '1.125rem',
-                    fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                    letterSpacing: '-0.02em',
-                    textTransform: 'lowercase'
-                  }}
+                  className="hipster-heading feedback-title"
                 >
                   feedback
                 </Typography>
                 {isWaitingForResponse && (
                   <Typography 
                     variant="body2" 
-                    className="hipster-heading"
-                    sx={{ 
-                      color: '#666666', 
-                      fontSize: '0.875rem',
-                      fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                      letterSpacing: '-0.02em',
-                      textTransform: 'lowercase',
-                      fontWeight: 300
-                    }}
+                    className="hipster-heading feedback-sub"
                   >
                     (waiting for reply)
                   </Typography>
                 )}
               </Box>
-              <IconButton 
-                size="medium" 
-                onClick={toggleChat} 
-                sx={{ 
-                  color: '#1a1a1a',
-                  border: '2px solid #2c2c2c',
-                  borderRadius: 0,
-                  '&:hover': {
-                    bgcolor: '#66bb6a',
-                    color: '#ffffff',
-                    borderColor: '#66bb6a'
-                  }
-                }}
-              >
+              <IconButton size="medium" onClick={toggleChat} className="feedback-close">
                 <CloseIcon fontSize="medium" />
               </IconButton>
             </Box>
 
             {/* Chat Content */}
             {!isMinimized && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+              <Box className="feedback-body">
                 {/* Messages Area */}
                 {messages.length > 0 && (
-                  <Box sx={{ flex: 1, p: '4%', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: 1.5, minHeight: 0, maxHeight: '300px' }}>
+                  <Box className="feedback-messages">
                     {messages.map((msg) => (
-                      <Box key={msg.id} sx={{ display: 'flex', justifyContent: msg.type === 'user' ? 'flex-end' : 'flex-start' }}>
-                        <Box sx={{ 
-                          maxWidth: 320, 
-                          px: 1.5, 
-                          py: 1.25, 
-                          borderRadius: 0, 
-                          fontSize: '0.875rem', 
-                          background: msg.type === 'user' 
-                            ? '#1a1a1a' 
-                            : '#f8f9fa', 
-                          color: msg.type === 'user' ? '#ffffff' : '#1a1a1a', 
-                          border: '2px solid #2c2c2c',
-                          boxShadow: '3px 3px 0px #66bb6a',
-                          '& *': { color: 'inherit !important' }
-                        }}>
+                      <Box key={msg.id} className={`feedback-row ${msg.type === 'user' ? 'feedback-row--right' : ''}`}>
+                        <Box className={`feedback-bubble ${msg.type === 'user' ? 'feedback-bubble--user' : 'feedback-bubble--admin'}`}>
                           <Typography 
                             variant="caption" 
-                            className="hipster-heading"
-                            sx={{ 
-                              fontWeight: 300, 
-                              display: 'block', 
-                              mb: 0.5, 
-                              lineHeight: 0.9, 
-                              color: 'inherit !important',
-                              fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                              letterSpacing: '-0.02em',
-                              textTransform: 'lowercase'
-                            }}
+                            className="hipster-heading feedback-sender"
                           >
                             {msg.sender}
                           </Typography>
                           {msg.imageUrl && (
-                            <Box sx={{ mb: 1 }}>
-                              <img 
-                                src={msg.imageUrl} 
-                                alt="attached" 
-                                style={{ 
-                                  maxHeight: 160, 
-                                  borderRadius: 0,
-                                  border: '2px solid #2c2c2c'
-                                }} 
-                              />
+                            <Box style={{ marginBottom: 8 }}>
+                              <img src={msg.imageUrl} alt="attached" className="feedback-attach-img" />
                             </Box>
                           )}
                           {msg.message && (
-                            <Box 
-                              className="hipster-heading"
-                              sx={{ 
-                                color: 'inherit !important',
-                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                letterSpacing: '-0.02em',
-                                textTransform: 'lowercase',
-                                fontWeight: 300
-                              }}
-                            >
+                            <Box className="hipster-heading feedback-text">
                               {msg.message}
                             </Box>
                           )}
                           <Typography 
                             variant="caption" 
-                            className="hipster-heading"
-                            sx={{ 
-                              opacity: 0.7, 
-                              display: 'block', 
-                              mt: 0.5, 
-                              lineHeight: 0.9, 
-                              color: 'inherit !important',
-                              fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                              letterSpacing: '-0.02em',
-                              textTransform: 'lowercase',
-                              fontWeight: 300
-                            }}
+                            className="hipster-heading feedback-time"
                           >
                             {new Date(msg.timestamp).toLocaleTimeString()}
                           </Typography>
@@ -444,24 +335,13 @@ const FeedbackChat: React.FC = () => {
 
                 {/* Input Area */}
                 <Divider />
-                <Box sx={{ p: '4%', flexShrink: 0 }}>
+                <Box className="feedback-input-wrap">
                   {messages.length === 0 ? (
                     // Initial Form
-                    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'grid', gap: 1.25 }}>
+                    <Box component="form" onSubmit={handleSubmit} style={{ display: 'grid', gap: '10px' }}>
                   <Typography 
                     variant="body2" 
-                    className="hipster-heading"
-                    sx={{ 
-                      textAlign: 'center', 
-                      color: '#1a1a1a', 
-                      pt: '1em', 
-                      pb: '1em', 
-                      fontSize: '1rem', 
-                      fontWeight: 300,
-                      fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                      letterSpacing: '-0.02em',
-                      textTransform: 'lowercase'
-                    }}
+                    className="hipster-heading feedback-initial-title"
                   >
                         questions? we happy to help! 😊
                       </Typography>
@@ -473,34 +353,7 @@ const FeedbackChat: React.FC = () => {
                         placeholder={'your name'} 
                         required 
                         fullWidth 
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            fontSize: '0.875rem',
-                            fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                            borderRadius: 0,
-                            border: '2px solid #2c2c2c',
-                            '& .MuiOutlinedInput-notchedOutline': { border: 'none', borderColor: 'transparent' },
-                            '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none', borderColor: 'transparent' },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none', borderColor: 'transparent' },
-                            '&.Mui-focused': {
-                              border: '2px solid #66bb6a',
-                              boxShadow: '2px 2px 0px #2c2c2c'
-                            }
-                          },
-                          '& .MuiInputBase-input': {
-                            fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                            letterSpacing: '-0.02em',
-                            textTransform: 'lowercase',
-                            fontWeight: 300
-                          },
-                          '& .MuiInputBase-input::placeholder': {
-                            fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                            letterSpacing: '-0.02em',
-                            textTransform: 'lowercase',
-                            fontWeight: 300,
-                            opacity: 0.7
-                          }
-                        }}
+                        className="input input--light"
                       />
                       <TextField 
                         name="email" 
@@ -511,34 +364,7 @@ const FeedbackChat: React.FC = () => {
                         placeholder="your@email.com" 
                         required 
                         fullWidth
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            fontSize: '0.875rem',
-                            fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                            borderRadius: 0,
-                            border: '2px solid #2c2c2c',
-                            '& .MuiOutlinedInput-notchedOutline': { border: 'none', borderColor: 'transparent' },
-                            '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none', borderColor: 'transparent' },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none', borderColor: 'transparent' },
-                            '&.Mui-focused': {
-                              border: '2px solid #66bb6a',
-                              boxShadow: '2px 2px 0px #2c2c2c'
-                            }
-                          },
-                          '& .MuiInputBase-input': {
-                            fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                            letterSpacing: '-0.02em',
-                            textTransform: 'lowercase',
-                            fontWeight: 300
-                          },
-                          '& .MuiInputBase-input::placeholder': {
-                            fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                            letterSpacing: '-0.02em',
-                            textTransform: 'lowercase',
-                            fontWeight: 300,
-                            opacity: 0.7
-                          }
-                        }}
+                        className="input input--light"
                       />
                       <TextField 
                         name="message" 
@@ -550,61 +376,11 @@ const FeedbackChat: React.FC = () => {
                         minRows={3} 
                         required 
                         fullWidth
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            fontSize: '0.875rem',
-                            fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                            borderRadius: 0,
-                            border: '2px solid #2c2c2c',
-                            '& .MuiOutlinedInput-notchedOutline': { border: 'none', borderColor: 'transparent' },
-                            '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none', borderColor: 'transparent' },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none', borderColor: 'transparent' },
-                            '&.Mui-focused': {
-                              border: '2px solid #66bb6a',
-                              boxShadow: '2px 2px 0px #2c2c2c'
-                            }
-                          },
-                          '& .MuiInputBase-input': {
-                            fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                            letterSpacing: '-0.02em',
-                            textTransform: 'lowercase',
-                            fontWeight: 300
-                          },
-                          '& .MuiInputBase-input::placeholder': {
-                            fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                            letterSpacing: '-0.02em',
-                            textTransform: 'lowercase',
-                            fontWeight: 300,
-                            opacity: 0.7
-                          }
-                        }}
+                        className="input input--light"
                       />
                       <Button 
                         type="submit" 
-                        variant="contained" 
-                        className="hipster-heading"
-                        sx={{ 
-                          mt: '0.5em', 
-                          bgcolor: '#1a1a1a', 
-                          color: '#ffffff !important',
-                          border: '2px solid #2c2c2c',
-                          boxShadow: '3px 3px 0px #66bb6a',
-                          '&:hover': { 
-                            bgcolor: '#66bb6a',
-                            color: '#ffffff !important',
-                            transform: 'translateY(-1px) translateX(-1px)',
-                            boxShadow: '4px 4px 0px #1a1a1a',
-                            borderColor: '#66bb6a'
-                          }, 
-                          py: 1.25, 
-                          fontSize: '1rem', 
-                          fontWeight: 800,
-                          fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                          letterSpacing: '0.05em',
-                          textTransform: 'uppercase',
-                          borderRadius: 0,
-                          '& *': { color: '#ffffff !important' }
-                        }} 
+                        className="btn btn--dark btn--block feedback-send"
                         fullWidth
                       >
                         start chat
@@ -613,7 +389,7 @@ const FeedbackChat: React.FC = () => {
                   ) : (
                     // Chat Input
                     <>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                      <Box style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         <TextField
                           value={currentMessage}
                           onChange={(e) => setCurrentMessage(e.target.value)}
@@ -621,60 +397,9 @@ const FeedbackChat: React.FC = () => {
                           placeholder="type a message..."
                           size="small"
                           fullWidth
-                          sx={{
-                            '& .MuiOutlinedInput-root': {
-                              fontSize: '0.875rem',
-                              fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                              borderRadius: 0,
-                              border: '2px solid #2c2c2c',
-                              '& .MuiOutlinedInput-notchedOutline': { 
-                                border: 'none',
-                                borderColor: 'transparent'
-                              },
-                              '&:hover .MuiOutlinedInput-notchedOutline': { 
-                                border: 'none',
-                                borderColor: 'transparent'
-                              },
-                              '&.Mui-focused .MuiOutlinedInput-notchedOutline': { 
-                                border: 'none',
-                                borderColor: 'transparent'
-                              },
-                              '&.Mui-focused': {
-                                border: '2px solid #66bb6a',
-                                boxShadow: '2px 2px 0px #2c2c2c'
-                              }
-                            },
-                            '& .MuiInputBase-input': {
-                              fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                              letterSpacing: '-0.02em',
-                              textTransform: 'lowercase',
-                              fontWeight: 300
-                            },
-                            '& .MuiInputBase-input::placeholder': {
-                              fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                              letterSpacing: '-0.02em',
-                              textTransform: 'lowercase',
-                              fontWeight: 300,
-                              opacity: 0.7
-                            }
-                          }}
+                          className="input input--light"
                         />
-                        <IconButton 
-                          component="label" 
-                          size="small" 
-                          title="Attach photo" 
-                          aria-label="Attach photo" 
-                          sx={{ 
-                            border: '2px solid #2c2c2c', 
-                            borderRadius: 0,
-                            color: '#1a1a1a',
-                            '&:hover': {
-                              bgcolor: '#66bb6a',
-                              color: '#ffffff',
-                              borderColor: '#66bb6a'
-                            }
-                          }}
-                        >
+                        <IconButton component="label" size="small" title="Attach photo" aria-label="Attach photo" className="feedback-attach">
                           <input type="file" accept="image/*" onChange={handleFileChange} hidden />
                           <Box component="svg" width={16} height={16} viewBox="0 0 24 24" fill="none" sx={{ color: 'inherit' }}>
                             <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66L9.64 16.2a2 2 0 01-2.83-2.83l8.49-8.49" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"/>
@@ -683,82 +408,26 @@ const FeedbackChat: React.FC = () => {
                         <Button 
                           onClick={sendMessage}
                           disabled={!currentMessage.trim() && !attachment}
-                          variant="contained"
+                          className="btn btn--dark"
                           size="medium"
                           endIcon={
                             <Box component="svg" width={16} height={16} viewBox="0 0 24 24" fill="none" sx={{ color: 'inherit' }}>
                               <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"/>
                             </Box>
                           }
-                          sx={{ 
-                            bgcolor: '#1a1a1a', 
-                            color: '#ffffff',
-                            border: '2px solid #2c2c2c',
-                            boxShadow: '3px 3px 0px #66bb6a',
-                            '&:hover': { 
-                              bgcolor: '#66bb6a',
-                              transform: 'translateY(-1px) translateX(-1px)',
-                              boxShadow: '4px 4px 0px #1a1a1a',
-                              borderColor: '#66bb6a'
-                            },
-                            textTransform: 'uppercase',
-                            minWidth: 'auto',
-                            px: 2,
-                            py: 1,
-                            borderRadius: 0,
-                            fontSize: '0.875rem',
-                            fontWeight: 800,
-                            fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                            letterSpacing: '0.05em',
-                            '&.Mui-disabled': { 
-                              bgcolor: '#f5f5f5', 
-                              color: '#999999',
-                              borderColor: '#e0e0e0',
-                              boxShadow: '2px 2px 0px #e0e0e0'
-                            }
-                          }}
                         >
                           send
                         </Button>
                       </Box>
                       {attachment && (
-                        <Box sx={{ 
-                          mt: 1.25, 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          justifyContent: 'space-between', 
-                          gap: 1.25, 
-                          border: '2px solid', 
-                          borderColor: '#2c2c2c', 
-                          borderRadius: 0, 
-                          p: 1, 
-                          bgcolor: '#f8f9fa',
-                          boxShadow: '2px 2px 0px #66bb6a'
-                        }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, minWidth: 0 }}>
+                        <Box className="feedback-attach-box">
+                          <Box style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
                             {attachmentPreviewUrl && (
-                              <img 
-                                src={attachmentPreviewUrl} 
-                                alt="preview" 
-                                style={{ 
-                                  width: 40, 
-                                  height: 40, 
-                                  objectFit: 'cover', 
-                                  borderRadius: 0,
-                                  border: '2px solid #2c2c2c'
-                                }} 
-                              />
+                              <img src={attachmentPreviewUrl} alt="preview" style={{ width: 40, height: 40, objectFit: 'cover', border: '2px solid #2c2c2c' }} />
                             )}
                             <Typography 
                               variant="caption" 
-                              className="hipster-heading"
-                              sx={{ 
-                                color: '#1a1a1a',
-                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                letterSpacing: '-0.02em',
-                                textTransform: 'lowercase',
-                                fontWeight: 300
-                              }} 
+                              className="hipster-heading feedback-attach-caption"
                               noWrap
                             >
                               photo attached: {attachment.name}
@@ -768,24 +437,7 @@ const FeedbackChat: React.FC = () => {
                             size="small" 
                             variant="text" 
                             onClick={removeAttachment} 
-                            className="hipster-heading"
-                            sx={{
-                              color: '#1a1a1a',
-                              border: '2px solid #2c2c2c',
-                              borderRadius: 0,
-                              fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                              letterSpacing: '-0.02em',
-                              textTransform: 'lowercase',
-                              fontWeight: 300,
-                              fontSize: '0.75rem',
-                              px: 1,
-                              py: 0.5,
-                              '&:hover': {
-                                bgcolor: '#66bb6a',
-                                color: '#ffffff',
-                                borderColor: '#66bb6a'
-                              }
-                            }}
+                            className="hipster-heading feedback-remove-btn"
                           >
                             remove
                           </Button>
@@ -805,33 +457,7 @@ const FeedbackChat: React.FC = () => {
       {/* Floating Button - hidden when chat is open */}
       {!isOpen && (
         <Grow in={!isOpen} timeout={500}>
-          <Box
-            onClick={toggleChat}
-            sx={{
-              width: 80,
-              height: 80,
-              borderRadius: '50%',
-              bgcolor: '#1a1a1a',
-              color: '#ffffff',
-              border: '2px solid #2c2c2c',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                bgcolor: '#66bb6a',
-                transform: 'translateY(-2px)',
-                boxShadow: '0 12px 40px rgba(0, 0, 0, 0.4)',
-                borderColor: '#66bb6a',
-              },
-              '&:active': {
-                transform: 'translateY(0)',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-              }
-            }}
-          >
+          <Box onClick={toggleChat} className="feedback-fab">
             <Box component="svg" width={32} height={32} viewBox="0 0 24 24" fill="none" sx={{ color: 'inherit' }}>
               <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"/>
             </Box>

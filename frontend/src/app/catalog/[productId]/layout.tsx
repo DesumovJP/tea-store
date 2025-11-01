@@ -1,9 +1,10 @@
 import { fetchProductBySlug } from "@/lib/graphql";
 import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: { productId: string } }): Promise<Metadata> {
-    const slug = params?.productId;
-    const product = slug ? await fetchProductBySlug(slug) : null;
+// Next.js 15: dynamic route params are async in generateMetadata
+export async function generateMetadata({ params }: { params: Promise<{ productId: string }> }): Promise<Metadata> {
+    const { productId } = await params;
+    const product = productId ? await fetchProductBySlug(productId) : null;
     const title = product?.title ? `guru tea - ${product.title}` : "guru tea - product";
     return { title };
 }

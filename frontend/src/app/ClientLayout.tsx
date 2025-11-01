@@ -18,20 +18,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     
     return (
         <ThemeProvider>
-            <Box sx={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                minHeight: '100vh',
-                maxWidth: '100vw',
-                overflow: 'hidden'
-            }}>
+            <Box className="client-layout-root">
                 <Navbar />
-                <Box component="main" sx={{ 
-                    flex: '1 0 auto',
-                    pt: { xs: '3.5rem', sm: '4rem' },
-                    maxWidth: '100%',
-                    overflow: 'hidden'
-                }}>
+                <Box component="main" className="client-layout-main">
                     {children}
                 </Box>
                 <LazyPromoStrip isCartPage={isCartPage} />

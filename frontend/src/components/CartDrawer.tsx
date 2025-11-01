@@ -17,6 +17,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import LinearProgress from "@mui/material/LinearProgress";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
+import CartItemCard from "@/components/CartItemCard";
 
 export default function CartDrawer({
                                        open,
@@ -38,60 +39,23 @@ export default function CartDrawer({
             onClose={onClose}
             disableScrollLock
             closeAfterTransition
-            sx={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                justifyContent: 'flex-end',
-                p: 2,
-            }}
-            BackdropProps={{
-                sx: {
-                    backdropFilter: 'blur(8px)',
-                    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                    transition: 'all 0.3s ease-in-out',
-                }
-            }}
+            className="cart-modal"
+            BackdropProps={{}}
         >
             <Fade in={open} timeout={300}>
                 <Slide direction="left" in={open} timeout={400}>
-                    <Box sx={{ 
-                        width: { xs: '100%', sm: '40rem', md: '45rem' },
-                        maxWidth: '100%',
-                        background: '#ffffff',
-                        borderRadius: '0.75rem',
-                        boxShadow: '0 0.5rem 2rem rgba(0, 0, 0, 0.15)',
-                        maxHeight: '95vh',
-                        overflow: 'auto',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        transform: 'translateX(0)',
-                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                    }}>
+                    <Box className="cart-panel">
                 {/* Header */}
-                <Box sx={{ 
-                    p: 4, 
-                    borderBottom: '0.0625rem solid', 
-                    borderColor: '#e0e0e0',
-                    bgcolor: '#ffffff',
-                    boxShadow: '0 0.125rem 0.5rem rgba(0, 0, 0, 0.08)'
-                }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                <Box className="cart-header">
+                    <Box className="cart-header-bar">
                         <Typography 
                             variant="h4" 
-                            className="hipster-heading"
-                            sx={{ 
-                                fontWeight: 300, 
-                                color: '#1a1a1a', 
-                                fontSize: { xs: '1.5rem', sm: '1.75rem' },
-                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                letterSpacing: '-0.02em',
-                                textTransform: 'lowercase'
-                            }}
+                            className="hipster-heading cart-title"
                         >
                             shopping cart ({totalItems} items)
                         </Typography>
-                        <IconButton onClick={onClose} sx={{ color: '#2c2c2c', fontSize: '1.5rem' }}>
-                            <CloseIcon sx={{ fontSize: '1.5rem' }} />
+                        <IconButton onClick={onClose} className="cart-close">
+                            <CloseIcon />
                         </IconButton>
                     </Box>
                     
@@ -101,25 +65,9 @@ export default function CartDrawer({
                             <LinearProgress 
                                 variant="determinate" 
                                 value={progressValue} 
-                                sx={{ 
-                                    height: 6, 
-                                    borderRadius: 3,
-                                    backgroundColor: '#e0e0e0',
-                                    '& .MuiLinearProgress-bar': {
-                                        backgroundColor: '#4caf50',
-                                        borderRadius: 3,
-                                    }
-                                }} 
+                                className="cart-progress"
                             />
-                            <Typography variant="body1" sx={{ 
-                                mt: 1.5, 
-                                color: totalPrice >= freeShippingThreshold ? '#66bb6a' : '#4a4a4a', 
-                                fontSize: '0.875rem', 
-                                fontWeight: 300,
-                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                letterSpacing: '-0.02em',
-                                textTransform: 'lowercase'
-                            }}>
+                            <Typography variant="body1" className={`cart-progress-text ${totalPrice >= freeShippingThreshold ? 'cart-progress-text--ok' : 'cart-progress-text--more'}`}>
                                 {totalPrice >= freeShippingThreshold 
                                     ? "you are eligible for free shipping!" 
                                     : `add $${(freeShippingThreshold - totalPrice).toFixed(2)} more for free shipping`
@@ -130,252 +78,13 @@ export default function CartDrawer({
                 </Box>
 
                 {/* Cart Items */}
-                <Box sx={{ flex: 1, overflowY: 'auto', p: 4 }}>
+                <Box className="cart-body">
                     {items.length === 0 ? (
-                        <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <Box sx={{ textAlign: 'center' }}>
-                                <Box sx={{ display: 'inline-flex', mb: 1.5, color: 'text.secondary' }}>
-                                    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M3 3h1.5l2.4 10.02c.11.47.53.8 1.01.8H17a1 1 0 0 0 .98-.8L19 7H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <circle cx="9" cy="20" r="1" stroke="currentColor" stroke-width="1.5"/>
-                                        <circle cx="16" cy="20" r="1" stroke="currentColor" stroke-width="1.5"/>
-                                    </svg>
-                                </Box>
-                                <Typography variant="h5" sx={{ 
-                                    mb: 1, 
-                                    color: '#4a4a4a', 
-                                    fontSize: '1.25rem',
-                                    fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                    letterSpacing: '-0.02em',
-                                    textTransform: 'lowercase',
-                                    fontWeight: 300
-                                }}>
-                                    your cart is empty
-                                </Typography>
-                                <Typography variant="body1" sx={{ 
-                                    color: '#4a4a4a', 
-                                    fontSize: '1rem',
-                                    fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                    letterSpacing: '-0.02em',
-                                    textTransform: 'lowercase',
-                                    fontWeight: 300
-                                }}>
-                                    add some items to get started
-                                </Typography>
-                            </Box>
-                        </Box>
+                        <Typography variant="body1" sx={{ color: '#4a4a4a', fontWeight: 300 }}>your cart is empty</Typography>
                     ) : (
-                        <Stack spacing={4}>
+                        <Stack spacing={2} sx={{ pr: 1 }} className="custom-scrollbar">
                             {items.map((item) => (
-                                <Box key={item.id} sx={{ 
-                                    p: 3,
-                                    bgcolor: '#ffffff',
-                                    borderRadius: '0.75rem',
-                                    border: '1px solid #e0e0e0',
-                                    boxShadow: '0 0.125rem 0.5rem rgba(0, 0, 0, 0.08)'
-                                }}>
-                                    <Grid container spacing={2} alignItems="center">
-                                        {/* Product Image - 4 columns (35%) */}
-                                        <Grid size={4}>
-                                            <Box sx={{ 
-                                                width: '100%', 
-                                                height: '8rem', 
-                                                borderRadius: '0.5rem', 
-                                                overflow: "hidden",
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center'
-                                            }}>
-                                                {item.imageUrl ? (
-                                                    <CardMedia
-                                                        component="img"
-                                                        image={item.imageUrl}
-                                                        alt={item.name}
-                                                        sx={{ 
-                                                            width: "100%", 
-                                                            height: "100%", 
-                                                            objectFit: "contain",
-                                                            maxWidth: '100%',
-                                                            maxHeight: '100%'
-                                                        }}
-                                                    />
-                                                ) : (
-                                                    <Box sx={{ 
-                                                        width: "100%", 
-                                                        height: "100%", 
-                                                        display: "flex", 
-                                                        alignItems: "center", 
-                                                        justifyContent: "center", 
-                                                        color: "text.secondary", 
-                                                        fontSize: '0.75rem' 
-                                                    }}>
-                                                        No Image
-                                                    </Box>
-                                                )}
-                                            </Box>
-                                        </Grid>
-
-                                        {/* Product Info - 5 columns (45%) */}
-                                        <Grid size={5}>
-                                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                                                {/* Product Name */}
-                                                <Typography variant="h5" sx={{ 
-                                                    fontWeight: 500, 
-                                                    color: '#1a1a1a',
-                                                    fontSize: '1.25rem',
-                                                    lineHeight: 1.2,
-                                                    mb: 1,
-                                                    fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                    letterSpacing: '-0.02em',
-                                                    textTransform: 'lowercase'
-                                                }}>
-                                                    {item.name}
-                                                </Typography>
-                                                
-                                                {/* Category */}
-                                                <Typography variant="body1" sx={{ 
-                                                    color: '#4a4a4a',
-                                                    fontSize: '0.875rem',
-                                                    fontWeight: 300,
-                                                    mb: 1.5,
-                                                    fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                    letterSpacing: '-0.02em',
-                                                    textTransform: 'lowercase'
-                                                }}>
-                                                    {item.categoryName || 'premium quality'}
-                                                </Typography>
-                                                
-                                                {/* Price */}
-                                                <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 0.75, mb: 1.5, flexWrap: 'wrap' }}>
-                                                    <Typography variant="h5" sx={{ 
-                                                        fontWeight: 500, 
-                                                        color: '#1a1a1a',
-                                                        fontSize: '1.5rem',
-                                                        fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                        letterSpacing: '-0.02em'
-                                                    }}>
-                                                        ${item.price.toFixed(2)}
-                                                    </Typography>
-                                                    <Typography variant="body1" sx={{ 
-                                                        color: '#4a4a4a',
-                                                        fontSize: '0.875rem',
-                                                        fontWeight: 300,
-                                                        fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                        letterSpacing: '-0.02em',
-                                                        textTransform: 'lowercase'
-                                                    }}>/ 100g × {item.quantity}</Typography>
-                                                    {item.quantity > 1 && (
-                                                        <Typography variant="body1" sx={{ 
-                                                            color: '#1a1a1a',
-                                                            fontSize: '0.875rem',
-                                                            fontWeight: 500,
-                                                            fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                            letterSpacing: '-0.02em'
-                                                        }}>
-                                                            = ${(item.price * item.quantity).toFixed(2)}
-                                                        </Typography>
-                                                    )}
-                                                </Box>
-
-                                                {/* Quantity Controls */}
-                                                <Box sx={{ 
-                                                    display: 'flex', 
-                                                    alignItems: 'center',
-                                                    border: '0.0625rem solid #2c2c2c',
-                                                    borderRadius: 0,
-                                                    width: 'fit-content'
-                                                }}>
-                                                    <IconButton 
-                                                        size="medium" 
-                                                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                                        sx={{ 
-                                                            border: 'none',
-                                                            borderRight: '0.0625rem solid #2c2c2c',
-                                                            borderRadius: 0,
-                                                            width: '2.5rem',
-                                                            height: '2.5rem',
-                                                            color: '#4caf50',
-                                                            '&:hover': {
-                                                                bgcolor: 'rgba(76, 175, 80, 0.1)',
-                                                                color: '#2e7d32'
-                                                            }
-                                                        }}
-                                                    >
-                                                        <RemoveIcon sx={{ fontSize: '1rem' }} />
-                                                    </IconButton>
-                                                    <Box sx={{ 
-                                                        px: '1.25rem',
-                                                        py: '0.625rem',
-                                                        minWidth: '3.75rem',
-                                                        textAlign: 'center',
-                                                        borderRight: '0.0625rem solid #2c2c2c',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        bgcolor: 'transparent'
-                                                    }}>
-                                                        <Typography variant="body1" sx={{ color: '#2c2c2c', fontWeight: 600, fontSize: '1rem' }}>
-                                                            {item.quantity.toString().padStart(2, '0')}
-                                                        </Typography>
-                                                    </Box>
-                                                    <IconButton 
-                                                        size="medium" 
-                                                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                                        sx={{ 
-                                                            border: 'none',
-                                                            borderRadius: 0,
-                                                            width: '2.5rem',
-                                                            height: '2.5rem',
-                                                            color: '#2c2c2c',
-                                                            '&:hover': {
-                                                                bgcolor: 'rgba(44, 44, 44, 0.1)',
-                                                                color: '#000000'
-                                                            }
-                                                        }}
-                                                    >
-                                                        <AddIcon sx={{ fontSize: '1rem' }} />
-                                                    </IconButton>
-                                                </Box>
-                                            </Box>
-                                        </Grid>
-
-                                        {/* Remove Button - 3 columns (25%) */}
-                                        <Grid size={3}>
-                                            <Box sx={{ 
-                                                display: 'flex', 
-                                                justifyContent: 'center', 
-                                                alignItems: 'center',
-                                                height: '100%'
-                                            }}>
-                                                <Button 
-                                                    variant="text" 
-                                                    size="medium" 
-                                                    onClick={() => removeItem(item.id)}
-                                                    sx={{
-                                                        color: '#2c2c2c',
-                                                        fontSize: '0.875rem',
-                                                        textTransform: 'lowercase',
-                                                        fontWeight: 300,
-                                                        fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                        letterSpacing: '-0.02em',
-                                                        borderRadius: 0,
-                                                        border: '1px solid #2c2c2c',
-                                                        px: 2,
-                                                        py: 0.5,
-                                                        '&:hover': {
-                                                            color: '#d32f2f',
-                                                            bgcolor: 'rgba(211, 47, 47, 0.05)',
-                                                            borderColor: '#d32f2f'
-                                                        },
-                                                        transition: 'all 0.2s ease'
-                                                    }}
-                                                >
-                                                    remove
-                                                </Button>
-                                            </Box>
-                                        </Grid>
-                                    </Grid>
-                                </Box>
+                                <CartItemCard key={item.id} item={item} onRemove={removeItem} onUpdateQty={updateQuantity} />
                             ))}
                         </Stack>
                     )}
@@ -414,26 +123,18 @@ export default function CartDrawer({
                         </Box>
 
                         {/* Shipping Info */}
-                        <Typography variant="body1" sx={{ 
-                            mb: 2, 
-                            color: '#4a4a4a', 
-                            fontSize: '0.875rem',
-                            fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                            letterSpacing: '-0.02em',
-                            textTransform: 'lowercase',
-                            fontWeight: 300
-                        }}>
+                        <Typography variant="body1" className="cart-item-category" style={{ marginBottom: 8 }}>
                             tax included. shipping calculated at checkout.
                         </Typography>
 
                         {/* Checkout Button */}
-                        <Link href="/cart" style={{ textDecoration: 'none' }}>
+                        <Link href="/cart" className="link-unstyled">
                             <Button 
                                 variant="contained" 
                                 fullWidth 
                                 size="large"
                                 onClick={onClose}
-                                className="cart-hipster-button"
+                                className="btn btn--dark cart-checkout-button"
                                 startIcon={
                                     <Box component="svg" width={20} height={20} viewBox="0 0 24 24" fill="none">
                                         <circle cx="9" cy="21" r="1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -441,29 +142,6 @@ export default function CartDrawer({
                                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                     </Box>
                                 }
-                                sx={{ 
-                                    backgroundColor: '#1a1a1a',
-                                    color: '#ffffff',
-                                    py: '1.25rem',
-                                    fontWeight: 700,
-                                    textTransform: 'lowercase',
-                                    letterSpacing: '-0.02em',
-                                    fontSize: '1rem',
-                                    fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                    border: '2px solid #2c2c2c',
-                                    borderRadius: 0,
-                                    boxShadow: '3px 3px 0px #66bb6a',
-                                    '&:hover': {
-                                        backgroundColor: '#66bb6a',
-                                        color: '#ffffff',
-                                        transform: 'translateY(-1px) translateX(-1px)',
-                                        boxShadow: '4px 4px 0px #1a1a1a'
-                                    },
-                                    '&:active': {
-                                        transform: 'translateY(0) translateX(0)',
-                                        boxShadow: '3px 3px 0px #66bb6a'
-                                    }
-                                }}
                             >
                                 check out
                             </Button>
