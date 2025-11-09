@@ -33,8 +33,6 @@ export default function Catalog() {
     const [sortBy, setSortBy] = useState<string>("ratings");
     const [searchTerm, setSearchTerm] = useState<string>("");
     const addItem = useCartStore((s) => s.addItem);
-    const storyTopRef = useRef<HTMLDivElement | null>(null);
-    const [storyTopAnim, setStoryTopAnim] = useState(0);
     const searchParams = useSearchParams();
     
     // Use cached data
@@ -54,20 +52,7 @@ export default function Catalog() {
         };
     }, []);
 
-    // Trigger top Our Story (under navbar) when visible
-    useEffect(() => {
-        const el = storyTopRef.current;
-        if (!el) return;
-        const obs = new IntersectionObserver((entries) => {
-            const e = entries[0];
-            if (e.isIntersecting) {
-                setStoryTopAnim(1); // Set to 1 to trigger animation
-                obs.disconnect(); // Disconnect after first trigger
-            }
-        }, { threshold: 0.2, rootMargin: "0px 0px -10% 0px" });
-        obs.observe(el);
-        return () => obs.disconnect();
-    }, []);
+    // Removed Our Story intro block and its animation
 
     // Preselect category from query string (?category=Name)
     useEffect(() => {
@@ -134,25 +119,7 @@ export default function Catalog() {
         <Box className="catalog-background-gradient">
             <Box className="catalog-page-container">
 
-                {/* Our Story intro (between navbar and product grid) */}
-                {/* Our Story text block under navbar (animated) */}
-                <Box className="catalog-story-section">
-                    <Box ref={storyTopRef} className="ourstory-enter" data-anim={storyTopAnim}>
-                        <Typography 
-                            variant="h2"
-                            align="center" 
-                            className="catalog-story-title"
-                        >
-                            our story
-                        </Typography>
-                        <Typography 
-                            variant="body1" 
-                            className="catalog-story-text"
-                        >
-                            we meticulously select harvests from trusted farms and hand‑sort only the finest whole leaves. each lot is cupped and evaluated for aroma, body and sweetness to ensure exceptional clarity in your cup. our job is the careful sourcing and curation — so you can simply brew, savour and enjoy the best of tea.
-                        </Typography>
-                    </Box>
-                </Box>
+                {/* Our Story section removed by request */}
 
                 <Box className="catalog-outer-grid">
                     {/* Left Panel - Teas Introduction and Filters */}
@@ -196,7 +163,7 @@ export default function Catalog() {
                             {/* Search under categories */}
                             <Box className="catalog-search-container">
                                 <OutlinedInput
-                                    placeholder="search teas by name"
+                                    placeholder="Search by name"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     className="catalog-input catalog-search-input input input--light"
@@ -220,14 +187,14 @@ export default function Catalog() {
                                         MenuProps={{ disableScrollLock: true }}
                                         renderValue={(selected) => {
                                             switch (selected) {
-                                                case "ratings": return "sort by rating";
-                                                case "price-low": return "sort by price";
-                                                default: return "sort by rating";
+                                                case "ratings": return "Sort by rating";
+                                                case "price-low": return "Sort by price";
+                                                default: return "Sort by rating";
                                             }
                                         }}
                                     >
-                                        <MenuItem value="ratings">sort by rating</MenuItem>
-                                        <MenuItem value="price-low">sort by price</MenuItem>
+                                        <MenuItem value="ratings">Sort by rating</MenuItem>
+                                        <MenuItem value="price-low">Sort by price</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Box>
@@ -236,7 +203,7 @@ export default function Catalog() {
                     
                     {/* Product Grid */}
                     <Box className="catalog-center">
-                        <Grid container spacing={3} className="catalog-product-grid">
+                        <Grid container spacing={2} className="catalog-product-grid">
                             {sortedProducts.map((p, idx) => (
                                 <Grid key={p.documentId} size={{ xs: 12, sm: 6, md: 4, lg: 3 }} className={`${styles.card} ${styles.show} ${styles[`d${idx % 20}`]}`}>
                                     <ProductCard product={p} variant="catalog" onAddToCart={() => handleAddToCart(p)} />

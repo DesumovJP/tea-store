@@ -3,7 +3,6 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import styles from "./AboutBanner.module.css";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -163,11 +162,7 @@ export default function AboutBanner({
                 <Typography variant="body2" className="about-text">
                   {text}
                 </Typography>
-                <Link href="/about" className="link-unstyled">
-                  <Button className="btn btn--light">
-                    read more
-                  </Button>
-                </Link>
+                
               </Box>
             </Box>
           </Box>

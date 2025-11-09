@@ -10,7 +10,9 @@
     "combined": "node combined-server.js",
     "dev:all": "concurrently --prefix-colors \"blue,green\" --names \"FRONTEND,BACKEND\" \"yarn dev\" \"yarn combined\"",
     "prod:all": "concurrently --prefix-colors \"blue,green,yellow\" --names \"FRONTEND,CMS,WEBSOCKET\" \"yarn start\" \"cd ../cms && npm start\" \"yarn combined\"",
-    "start:all": "concurrently --prefix-colors \"blue,green,yellow\" --names \"FRONTEND,CMS,WEBSOCKET\" \"yarn start\" \"cd ../cms && npm start\" \"yarn combined\""
+    "start:all": "concurrently --prefix-colors \"blue,green,yellow\" --names \"FRONTEND,CMS,WEBSOCKET\" \"yarn start\" \"cd ../cms && npm start\" \"yarn combined\"",
+    "create-products": "node scripts/create-tea-products-direct.js",
+    "create-reviews": "node scripts/create-tea-reviews.js"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

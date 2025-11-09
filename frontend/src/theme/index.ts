@@ -45,7 +45,8 @@ const colors = {
 };
 
 // Base font family (single source of truth)
-export const baseFontFamily = 'var(--app-font, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif)';
+export const baseFontFamily = 'var(--app-font, "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif)';
+export const headingFontFamily = 'var(--heading-font, "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif)';
 
 // Common spacing values
 const spacing = {
@@ -62,48 +63,52 @@ const letterSpacing = {
 const typography = {
   fontFamily: baseFontFamily,
   h1: {
-    fontFamily: baseFontFamily,
-    fontWeight: 300,
+    fontFamily: headingFontFamily,
+    fontWeight: 700,
     color: colors.text.dark,
-    letterSpacing: letterSpacing.tight,
+    letterSpacing: '-0.02em',
     textTransform: 'none' as const,
-    lineHeight: 0.9,
+    lineHeight: 1.2,
   },
   h2: {
-    fontFamily: baseFontFamily,
-    fontWeight: 300,
+    fontFamily: headingFontFamily,
+    fontWeight: 700,
     color: colors.text.dark,
-    letterSpacing: letterSpacing.tight,
+    letterSpacing: '-0.02em',
     textTransform: 'none' as const,
-    lineHeight: 0.9,
+    lineHeight: 1.2,
   },
   h3: {
-    fontFamily: baseFontFamily,
-    fontWeight: 300,
+    fontFamily: headingFontFamily,
+    fontWeight: 600,
     color: colors.text.dark,
-    letterSpacing: letterSpacing.tight,
+    letterSpacing: '-0.01em',
     textTransform: 'none' as const,
+    lineHeight: 1.3,
   },
   h4: {
-    fontFamily: baseFontFamily,
-    fontWeight: 300,
+    fontFamily: headingFontFamily,
+    fontWeight: 600,
     color: colors.text.dark,
-    letterSpacing: letterSpacing.tight,
+    letterSpacing: '-0.01em',
     textTransform: 'none' as const,
+    lineHeight: 1.3,
   },
   h5: {
-    fontFamily: baseFontFamily,
-    fontWeight: 300,
+    fontFamily: headingFontFamily,
+    fontWeight: 600,
     color: colors.text.dark,
-    letterSpacing: letterSpacing.tight,
+    letterSpacing: '-0.01em',
     textTransform: 'none' as const,
+    lineHeight: 1.4,
   },
   h6: {
-    fontFamily: baseFontFamily,
-    fontWeight: 300,
+    fontFamily: headingFontFamily,
+    fontWeight: 600,
     color: colors.text.dark,
-    letterSpacing: letterSpacing.tight,
+    letterSpacing: '-0.01em',
     textTransform: 'none' as const,
+    lineHeight: 1.4,
   },
   body1: {
     fontFamily: baseFontFamily,

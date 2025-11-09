@@ -231,11 +231,11 @@ export default function CartPage() {
 	};
 
     return (
-        <Box sx={{ 
+        <Box className="cart-page" sx={{ 
             minHeight: '100vh', 
-            bgcolor: '#ffffff',
+            bgcolor: '#f5f5f5',
             py: 4,
-            fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif'
+            fontFamily: 'var(--app-font)'
         }}>
             <Box sx={{ 
                 px: { xs: '1rem', md: '10%', lg: '15%' }, 
@@ -270,19 +270,20 @@ export default function CartPage() {
 					</Box>
 				)}
 
-                <Grid container spacing={3} sx={{ alignItems: { md: 'flex-start' } }}>
+                <Grid container spacing={{ xs: 2, md: 4 }} sx={{ alignItems: { md: 'flex-start' } }}>
                     <Grid size={{ xs: 12, md: 7 }} sx={{ display: { md: 'flex' }, order: { xs: 1, md: 1 }, flexDirection: 'column' }}>
                         <Paper variant="outlined" sx={{ 
-                            p: 3, 
+                            p: { xs: 2, md: 3 }, 
                             mb: { xs: 3, md: 0 }, 
                             width: '100%', 
                             height: { xs: 'auto', md: 'auto' }, 
                             display: 'flex', 
                             flexDirection: 'column', 
                             bgcolor: '#ffffff', 
-                            borderRadius: '0.5rem', 
-                            border: '1px solid #e0e0e0', 
-                            boxShadow: '0 0.125rem 0.5rem rgba(0,0,0,0.08)'
+                            borderRadius: 0, 
+                            border: '0.5px solid rgba(0,0,0,0.06)', 
+                            boxShadow: 
+                                '0 1px 2px rgba(0,0,0,0.03), 0 2px 8px rgba(0,0,0,0.02)'
                         }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                                     <CartIcon sx={{ color: '#2c2c2c', mr: 1 }} />
@@ -290,15 +291,16 @@ export default function CartPage() {
                                         variant="h4" 
                                         className="hipster-heading"
                                         sx={{ 
-                                            fontWeight: 300, 
+                                            fontWeight: 600, 
                                             color: '#1a1a1a',
-                                            fontSize: '1.5rem',
-                                            fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
+                                            fontSize: { xs: '1.25rem', md: '1.5rem' },
+                                            fontFamily: 'var(--heading-font)',
                                             letterSpacing: '-0.02em',
-                                            textTransform: 'lowercase'
+                                            textTransform: 'capitalize',
+                                            mb: 0
                                         }}
                                     >
-                                        items in cart
+                                        Items in cart
                                     </Typography>
                                 </Box>
 							{items.length === 0 ? (
@@ -316,7 +318,7 @@ export default function CartPage() {
 										</Box>
 									</Box>
                             ) : (
-                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 1.5, md: 2 } }}>
                                     <Box sx={{ 
                                         maxHeight: items.length > 3 ? 'calc(3 * 10rem + 3.2rem)' : 'none',
                                         overflowY: items.length > 3 ? 'auto' : 'visible', 
@@ -329,111 +331,100 @@ export default function CartPage() {
 
                                     {/* Summary under items (left column) */}
                                     </Box>
-                                    <Paper variant="outlined" className="cart-summary-card" sx={{ 
-                                        p: 3, 
+                                    <Box className="cart-summary-card" sx={{ 
+                                        p: { xs: 2, md: 2.5 }, 
                                         flexShrink: 0,
-                                        border: '1px solid #e0e0e0', 
-                                        bgcolor: '#ffffff', 
-                                        borderRadius: '0.5rem', 
-                                        boxShadow: '0 0.125rem 0.5rem rgba(0,0,0,0.08)' 
+                                        bgcolor: 'transparent'
                                     }}>
-                                        <Box className="cart-summary-heading" sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                                            <ReceiptIcon sx={{ color: '#2c2c2c', mr: 1 }} />
-                                            <Typography 
-                                                variant="h5" 
-                                                className="hipster-heading"
-                                                sx={{ 
-                                                    fontWeight: 300, 
-                                                    color: '#1a1a1a',
-                                                    fontSize: '1.25rem',
-                                                    fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                    letterSpacing: '-0.02em',
-                                                    textTransform: 'lowercase'
-                                                }}
-                                            >
-                                                summary
-                                            </Typography>
+                                        <Box sx={{ 
+                                            display: "flex", 
+                                            flexDirection: "column", 
+                                            gap: 1.5,
+                                            mb: 2
+                                        }}>
+                                            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                                <Typography sx={{ 
+                                                    color: '#6b7280', 
+                                                    fontSize: '0.875rem',
+                                                    fontWeight: 300,
+                                                    fontFamily: 'var(--app-font)',
+                                                    letterSpacing: '-0.01em'
+                                                }}>
+                                                    Subtotal
+                                                </Typography>
+                                                <Typography sx={{ 
+                                                    color: '#1a1a1a', 
+                                                    fontSize: '0.875rem',
+                                                    fontWeight: 400,
+                                                    fontFamily: 'var(--app-font)',
+                                                    letterSpacing: '-0.01em'
+                                                }}>
+                                                    ${total.toFixed(2)}
+                                                </Typography>
+                                            </Box>
+                                            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                                <Typography sx={{ 
+                                                    color: '#6b7280', 
+                                                    fontSize: '0.875rem',
+                                                    fontWeight: 300,
+                                                    fontFamily: 'var(--app-font)',
+                                                    letterSpacing: '-0.01em'
+                                                }}>
+                                                    Shipping
+                                                </Typography>
+                                                <Typography sx={{ 
+                                                    color: shippingCost === 0 ? '#66bb6a' : '#1a1a1a', 
+                                                    fontSize: '0.875rem',
+                                                    fontWeight: 400,
+                                                    fontFamily: 'var(--app-font)',
+                                                    letterSpacing: '-0.01em'
+                                                }}>
+                                                    {shippingCost === 0 ? "Free" : `$${shippingCost.toFixed(2)}`}
+                                                </Typography>
+                                            </Box>
                                         </Box>
-                                        <Box className="cart-summary-row" sx={{ display: "flex", justifyContent: "space-between", py: 1.5, alignItems: "center" }}>
-                                            <Typography sx={{ 
-                                                color: '#1a1a1a', 
-                                                fontSize: '1rem',
+                                        
+                                        {items.length > 0 && total < freeShippingThreshold && (
+                                            <Typography variant="body2" sx={{ 
+                                                mb: 2,
+                                                color: '#6b7280',
+                                                fontSize: '0.8125rem',
                                                 fontWeight: 300,
-                                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                letterSpacing: '-0.02em',
-                                                textTransform: 'lowercase'
+                                                fontFamily: 'var(--app-font)',
+                                                letterSpacing: '-0.01em',
+                                                lineHeight: 1.4
                                             }}>
-                                                items subtotal
-                                            </Typography>
-                                            <Typography sx={{ 
-                                                color: '#1a1a1a', 
-                                                fontSize: '1rem',
-                                                fontWeight: 500,
-                                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                letterSpacing: '-0.02em'
-                                            }}>
-                                                ${total.toFixed(2)}
-                                            </Typography>
-                                        </Box>
-                                        <Box className="cart-summary-row" sx={{ display: "flex", justifyContent: "space-between", py: 1.5, alignItems: "center" }}>
-                                            <Typography sx={{ 
-                                                color: '#1a1a1a', 
-                                                fontSize: '1rem',
-                                                fontWeight: 300,
-                                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                letterSpacing: '-0.02em',
-                                                textTransform: 'lowercase'
-                                            }}>
-                                                shipping
-                                            </Typography>
-                                            <Typography sx={{ 
-                                                color: shippingCost === 0 ? '#66bb6a' : '#1a1a1a', 
-                                                fontSize: '1rem',
-                                                fontWeight: 500,
-                                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                letterSpacing: '-0.02em',
-                                                textTransform: 'lowercase'
-                                            }}>
-                                                {shippingCost === 0 ? "free" : `$${shippingCost.toFixed(2)}`}
-                                            </Typography>
-                                        </Box>
-                                        {items.length > 0 && (
-                                            <Typography variant="body2" className="cart-summary-note" sx={{ 
-                                                pb: 1.5,
-                                                color: total >= freeShippingThreshold ? '#66bb6a' : '#4a4a4a',
-                                                fontSize: '0.875rem',
-                                                fontWeight: 300,
-                                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                letterSpacing: '-0.02em',
-                                                textTransform: 'lowercase',
-                                                fontStyle: total >= freeShippingThreshold ? 'italic' : 'normal'
-                                            }}>
-                                                {total >= freeShippingThreshold ? "✓ you have free shipping! 🤩" : `add $${(freeShippingThreshold - total).toFixed(2)} for free shipping 🤔`}
+                                                Add ${(freeShippingThreshold - total).toFixed(2)} more for free shipping
                                             </Typography>
                                         )}
-                                        <Divider sx={{ my: 1 }} />
-                                        <Box className="cart-summary-row" sx={{ display: "flex", justifyContent: "space-between", py: 1.5, alignItems: "center" }}>
+                                        
+                                        <Box sx={{ 
+                                            display: "flex", 
+                                            justifyContent: "space-between", 
+                                            alignItems: "center",
+                                            pt: 2,
+                                            borderTop: '1px solid rgba(0,0,0,0.08)'
+                                        }}>
                                             <Typography sx={{ 
                                                 fontWeight: 500, 
-                                                fontSize: '1.1rem',
+                                                fontSize: '1rem',
                                                 color: '#1a1a1a',
-                                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                letterSpacing: '-0.02em',
-                                                textTransform: 'lowercase'
+                                                fontFamily: 'var(--app-font)',
+                                                letterSpacing: '-0.01em'
                                             }}>
-                                                total
+                                                Total
                                             </Typography>
                                             <Typography sx={{ 
                                                 fontWeight: 600, 
-                                                fontSize: '1.1rem',
+                                                fontSize: '1.125rem',
                                                 color: '#1a1a1a',
-                                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                                letterSpacing: '-0.02em'
+                                                fontFamily: 'var(--app-font)',
+                                                letterSpacing: '-0.01em'
                                             }}>
                                                 ${grandTotal.toFixed(2)}
                                             </Typography>
                                         </Box>
-                                    </Paper>
+                                    </Box>
 
                                 </Box>
 							)}
@@ -459,18 +450,19 @@ export default function CartPage() {
 									variant="h5" 
 									className="hipster-heading"
 									sx={{ 
-										fontWeight: 300, 
+										fontWeight: 600, 
 										color: '#1a1a1a',
-										fontSize: '1.25rem',
-										fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
+										fontSize: { xs: '1.1rem', md: '1.25rem' },
+										fontFamily: 'var(--heading-font)',
 										letterSpacing: '-0.02em',
-										textTransform: 'lowercase'
+										textTransform: 'capitalize',
+										mb: 0
 									}}
 								>
-									contact details
+									Contact details
 								</Typography>
 							</Box>
-							<Grid container spacing={2}>
+							<Grid container spacing={{ xs: 1.5, md: 2 }}>
 								<Grid size={{ xs: 12, md: 6 }}>
 									<TextField 
 										size="small" 
@@ -555,11 +547,13 @@ export default function CartPage() {
 						</Paper>
 
                         <Paper variant="outlined" sx={{ 
-                            p: 3, 
+                            p: { xs: 2, md: 3 }, 
                             mb: 3,
-                            border: '1px solid #e0e0e0',
-                            borderRadius: '0.5rem',
-                            boxShadow: '0 0.125rem 0.5rem rgba(0,0,0,0.08)'
+                            border: '0.5px solid rgba(0,0,0,0.06)',
+                            borderRadius: 0,
+                            bgcolor: '#ffffff',
+                            boxShadow: 
+                                '0 1px 2px rgba(0,0,0,0.03), 0 2px 8px rgba(0,0,0,0.02)'
                         }}>
 							<Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
 								<LocalShippingIcon sx={{ color: '#2c2c2c', mr: 1 }} />
@@ -567,25 +561,19 @@ export default function CartPage() {
 									variant="h5" 
 									className="hipster-heading"
 									sx={{ 
-										fontWeight: 300, 
+										fontWeight: 600, 
 										color: '#1a1a1a',
-										fontSize: '1.25rem',
-										fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
+										fontSize: { xs: '1.1rem', md: '1.25rem' },
+										fontFamily: 'var(--heading-font)',
 										letterSpacing: '-0.02em',
-										textTransform: 'lowercase'
+										textTransform: 'capitalize',
+										mb: 0
 									}}
 								>
-									delivery
+									Delivery
 								</Typography>
 							</Box>
                             <FormControl>
-								<FormLabel id="delivery-type-label" sx={{ 
-									fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-									letterSpacing: '-0.02em',
-									textTransform: 'lowercase',
-									fontWeight: 300,
-									color: '#1a1a1a'
-								}}>delivery method</FormLabel>
                                 <RadioGroup
                                     row
                                     aria-labelledby="delivery-type-label"
@@ -597,12 +585,12 @@ export default function CartPage() {
 										<FormControlLabel value="courier" control={<Radio />} label="courier" />
                                 </RadioGroup>
                             </FormControl>
-                            <Grid container spacing={2} sx={{ mt: 1 }}>
+                            <Grid container spacing={{ xs: 1.5, md: 2 }} sx={{ mt: 1 }}>
                                 <Grid size={{ xs: 12, sm: 12, md: 6 }}>
-									<TextField 
+                                    <TextField 
 										size="small" 
 										margin="dense" 
-										label="city" 
+										label="city"
 										fullWidth 
 										value={city} 
 										onChange={(e) => setCity(e.target.value)}
@@ -688,28 +676,19 @@ export default function CartPage() {
                                     variant="h5" 
                                     className="hipster-heading"
                                     sx={{ 
-                                        fontWeight: 300, 
+                                        fontWeight: 600, 
                                         color: '#1a1a1a',
-                                        fontSize: '1.25rem',
-                                        fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
+                                        fontSize: { xs: '1.1rem', md: '1.25rem' },
+                                        fontFamily: 'var(--heading-font)',
                                         letterSpacing: '-0.02em',
-                                        textTransform: 'lowercase'
+                                        textTransform: 'capitalize',
+                                        mb: 0
                                     }}
                                 >
-                                    payment
+                                    Payment
                                 </Typography>
                             </Box>
-                            <Typography variant="body2" sx={{ 
-                                mb: 1, 
-                                color: '#4a4a4a',
-                                fontFamily: 'var(--font-space-grotesk), "Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                                letterSpacing: '-0.02em',
-                                textTransform: 'lowercase',
-                                fontWeight: 300
-                            }}>
-                                payment method: online card
-                            </Typography>
-                            <Grid container spacing={2} sx={{ mt: 1 }}>
+                            <Grid container spacing={{ xs: 1.5, md: 2 }} sx={{ mt: 1 }}>
                                 <Grid size={{ xs: 12, sm: 12, md: 6 }}>
                                     <TextField 
 										size="small" 
@@ -763,8 +742,36 @@ export default function CartPage() {
                                 className="btn btn--dark btn--block cart-checkout-button"
                                 disabled={items.length === 0 || submitting}
                                 onClick={handleSubmit}
+                                sx={{
+                                    mt: 3,
+                                    py: 1.5,
+                                    textTransform: 'none',
+                                    fontWeight: 500,
+                                    fontSize: '1rem',
+                                    fontFamily: 'var(--app-font)',
+                                    letterSpacing: '-0.01em',
+                                    borderRadius: 0,
+                                    boxShadow: 'none',
+                                    backgroundColor: '#1a1a1a',
+                                    color: '#ffffff',
+                                    transition: 'background-color 0.2s ease, opacity 0.2s ease',
+                                    '&:hover': {
+                                        boxShadow: 'none',
+                                        backgroundColor: '#000000',
+                                        opacity: 0.95
+                                    },
+                                    '&:active': {
+                                        backgroundColor: '#0a0a0a'
+                                    },
+                                    '& .MuiSvgIcon-root': {
+                                        transition: 'transform 0.2s ease'
+                                    },
+                                    '&:hover .MuiSvgIcon-root': {
+                                        transform: 'translateX(2px)'
+                                    }
+                                }}
                             >
-                                {submitting ? "processing..." : "proceed to payment"}
+                                {submitting ? "Processing..." : "Proceed to payment"}
                             </Button>
                         </Paper>
                     </Grid>

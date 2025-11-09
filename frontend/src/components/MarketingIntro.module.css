@@ -4,7 +4,7 @@
 
 .wrap {
   padding-top: 48px;
-  padding-bottom: 48px;
+  padding-bottom: 24px;
   padding-left: 2rem;
   padding-right: 2rem;
 }
@@ -12,7 +12,7 @@
 @media (min-width: 900px) {
   .wrap {
     padding-top: 64px;
-    padding-bottom: 64px;
+    padding-bottom: 32px;
     padding-left: 10%;
     padding-right: 10%;
   }
@@ -28,7 +28,7 @@
 .title {
   margin: 0 0 8px 0;
   text-align: center !important;
-  font-weight: 800 !important;
+  font-weight: 600 !important;
   font-size: clamp(1.6rem, 2.8vw, 2.25rem) !important;
   line-height: 1.1 !important;
   color: #111111 !important;

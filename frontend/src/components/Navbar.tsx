@@ -109,8 +109,7 @@ export default function Navbar() {
                         <Link href="/" passHref className="navbar-logo-link">
                             <Box className="navbar-logo">
                                 <Typography component="div" className="navbar-logo-title">
-                                    <span className="navbar-logo-word">guru</span>
-                                    <span className="navbar-logo-accent">tea</span>
+                                    GuruTea
                                 </Typography>
                             </Box>
                         </Link>
@@ -118,8 +117,7 @@ export default function Navbar() {
                         {/* Права частина — корзина */}
                         <IconButton 
                             onClick={() => setCartOpen(true)} 
-                            className={cartAnimating ? cartAnim.shake : ''}
-                            className="navbar-cart-btn"
+                            className={`${cartAnimating ? cartAnim.shake : ''} navbar-cart-btn`}
                         >
                             <Badge badgeContent={cartCount} color="error">
                                 <CartIcon size={28} />
@@ -190,13 +188,13 @@ export default function Navbar() {
                                                         variant="h6"
                                                         className="hipster-heading navbar-info-heading"
                                                     >
-                                                        доставка і оплата
+                                                        delivery & payment
                                                     </Typography>
                                                     <Typography
                                                         variant="body2"
                                                         className="navbar-info-body"
                                                     >
-                                                        швидка доставка по всій україні. безпечна оплата карткою або готівкою.
+                                                        fast nationwide delivery. secure payment by card or cash.
                                                     </Typography>
                                                 </Box>
 
@@ -205,13 +203,13 @@ export default function Navbar() {
                                                         variant="h6"
                                                         className="hipster-heading navbar-info-heading"
                                                     >
-                                                        гарантії якості
+                                                        quality assurance
                                                     </Typography>
                                                     <Typography
                                                         variant="body2"
                                                         className="navbar-info-body"
                                                     >
-                                                        тільки оригінальний чай з сертифікатами якості від перевірених постачальників.
+                                                        only authentic tea with quality certificates from trusted suppliers.
                                                     </Typography>
                                                 </Box>
 
@@ -220,13 +218,13 @@ export default function Navbar() {
                                                         variant="h6"
                                                         className="hipster-heading navbar-info-heading"
                                                     >
-                                                        контакти
+                                                        contact us
                                                     </Typography>
                                                     <Typography
                                                         variant="body2"
                                                         className="navbar-info-body"
                                                     >
-                                                        зв'яжіться з нами для консультації з вибору чаю або замовлення.
+                                                        get in touch for tea selection advice or to place an order.
                                                     </Typography>
                                                 </Box>
 
@@ -235,13 +233,13 @@ export default function Navbar() {
                                                         variant="h6"
                                                         className="hipster-heading navbar-info-heading"
                                                     >
-                                                        повернення товару
+                                                        returns
                                                     </Typography>
                                                     <Typography
                                                         variant="body2"
                                                         className="navbar-info-body"
                                                     >
-                                                        14 днів на повернення товару у разі невідповідності якості.
+                                                        14 days for returns in case of quality issues.
                                                     </Typography>
                                                 </Box>
 
@@ -250,13 +248,13 @@ export default function Navbar() {
                                                         variant="h6"
                                                         className="hipster-heading navbar-info-heading"
                                                     >
-                                                        програма лояльності
+                                                        loyalty program
                                                     </Typography>
                                                     <Typography
                                                         variant="body2"
                                                         className="navbar-info-body"
                                                     >
-                                                        накопичуйте бонуси за покупки та отримуйте знижки на наступні замовлення.
+                                                        earn points for purchases and get discounts on future orders.
                                                     </Typography>
                                                 </Box>
 
@@ -265,13 +263,13 @@ export default function Navbar() {
                                                         variant="h6"
                                                         className="hipster-heading navbar-info-heading"
                                                     >
-                                                        чайні церемонії
+                                                        tea ceremonies
                                                     </Typography>
                                                     <Typography
                                                         variant="body2"
                                                         className="navbar-info-body"
                                                     >
-                                                        організовуємо чайні церемонії та майстер-класи з приготування чаю.
+                                                        we organize tea ceremonies and brewing workshops.
                                                     </Typography>
                                                 </Box>
                                             </Box>
@@ -283,7 +281,7 @@ export default function Navbar() {
                                                 variant="h6"
                                                 className="navbar-social-title"
                                             >
-                                                Слідкуйте за нами
+                                                Follow us
                                             </Typography>
                                             <Box className="navbar-social-icons">
                                                 {/* Instagram */}

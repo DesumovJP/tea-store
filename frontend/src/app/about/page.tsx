@@ -6,31 +6,7 @@ import FeatureTriplet from "@/components/FeatureTriplet";
 export default function About() {
     return (
         <Box className="about-page-root">
-            <Container maxWidth={false} className="about-page-container">
-                <Typography 
-                    variant="h2" 
-                    className="hipster-heading about-title"
-                >
-                    about guru tea
-                </Typography>
-                <Typography variant="body1" className="about-text-par">
-                    guru tea is a premium tea company dedicated to sourcing and providing 
-                    the highest quality tea, herbs, and spices from around the world. 
-                    we believe in the power of exceptional tea to bring people together 
-                    and create moments of peace and mindfulness in our busy lives.
-                </Typography>
-                <Typography variant="body1" className="about-text-par">
-                    our carefully curated selection includes traditional teas from renowned 
-                    tea gardens, as well as unique blends that reflect our commitment to 
-                    quality and innovation. each product is selected for its exceptional 
-                    taste, aroma, and health benefits.
-                </Typography>
-                <Typography variant="body1" className="about-text-par">
-                    whether you&apos;re a tea connoisseur or just beginning your tea journey, 
-                    we&apos;re here to help you discover the perfect cup that suits your taste 
-                    and lifestyle.
-                </Typography>
-            </Container>
+            
 
             {/* About feature block similar to Our Tea Garden */}
             <FeatureTriplet

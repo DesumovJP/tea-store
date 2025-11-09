@@ -48,10 +48,10 @@ export default async function Home() {
 
     // Build hero slides from fetched files; sort to stabilize order
     const slogans = [
-        { headline: "brew better tea, effortlessly.", ctaHref: "/catalog", ctaLabel: "shop best‑sellers", paragraphs: [
+        { headline: "brew better tea, effortlessly.", ctaHref: "/catalog", ctaLabel: "explore favorites", paragraphs: [
             "hand‑picked whole leaves. small batches. fresh roast & fast dispatch."
         ] },
-        { headline: "ethically sourced. honestly priced.", ctaHref: "/catalog", ctaLabel: "shop all teas", paragraphs: [
+        { headline: "ethically sourced. honestly priced.", ctaHref: "/catalog", ctaLabel: "browse collection", paragraphs: [
             "we partner with small farms and pay fairly for every harvest."
         ] },
         { headline: "taste the difference in every cup.", ctaHref: "/catalog", ctaLabel: "discover blends", paragraphs: [
@@ -212,7 +212,7 @@ export default async function Home() {
             **/}
 
             {/* Marketing intro under Premium Tea */}
-            <MarketingIntro title="best‑sellers." subtitle="hand‑picked. small‑batch. ethically sourced." />
+            <MarketingIntro title="Best‑sellers." subtitle="hand‑picked. small‑batch. ethically sourced." />
 
             {/* Trust bar under hero */}
             <Box className="home-trust">
@@ -227,7 +227,7 @@ export default async function Home() {
                             <span className="home-trust-icon" aria-hidden>
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 1l3 7h7l-5.5 4 2 7L12 16l-6.5 3 2-7L2 8h7l3-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                             </span>
-                            4.8★ average rating
+                            4.8 average rating
                         </li>
                         <li className="home-trust-item">
                             <span className="home-trust-icon" aria-hidden>

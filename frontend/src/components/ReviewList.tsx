@@ -42,22 +42,24 @@ export default function ReviewList({ reviews, averageRating, totalReviews }: Rev
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
 
+  // Don't render anything if there are no reviews
+  if (reviews.length === 0) {
+    return null;
+  }
+
   return (
     <Box>
       <Box className="reviews-summary">
-        <Typography variant="h6" className="reviews-title">customer reviews</Typography>
-        <Box className="reviews-row">
-          <Typography variant="body1" className="reviews-score">{averageRating.toFixed(1)}</Typography>
-          <Typography variant="body2" className="reviews-text">out of 5 stars ({totalReviews} reviews)</Typography>
-        </Box>
+        <Typography variant="h6" className="reviews-title">Customer reviews</Typography>
+        <Typography variant="body1" className="reviews-row">
+          <Box component="span" className="reviews-score">{averageRating.toFixed(1)}</Box>
+          <Box component="span" className="reviews-text"> out of 5 stars ({totalReviews} reviews)</Box>
+        </Typography>
       </Box>
 
       {/* Reviews List */}
-      {reviews.length === 0 ? (
-        <Typography variant="body2" className="reviews-empty">no reviews yet. be the first to review this product!</Typography>
-      ) : (
-        <Box>
-          {reviews.map((review) => (
+      <Box>
+        {reviews.map((review) => (
             <Box key={review.documentId} className="review-card">
 
               {/* Header with user info */}
@@ -79,18 +81,15 @@ export default function ReviewList({ reviews, averageRating, totalReviews }: Rev
                 </Box>
               </Box>
 
-              {/* Review content with quotes positioned outside */}
+              {/* Review content */}
               {review.comment && (
                 <Box className="review-comment-wrap">
-                  <Box className="review-quote-open">"</Box>
-                  <Box className="review-quote-close">"</Box>
                   <Typography variant="body2" className="review-comment-body">{review.comment}</Typography>
                 </Box>
               )}
             </Box>
           ))}
         </Box>
-      )}
     </Box>
   );
 }

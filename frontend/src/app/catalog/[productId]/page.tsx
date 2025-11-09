@@ -15,8 +15,8 @@ import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useCartStore } from "@/store/cartStore";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { triggerGlobalCartAnimation } from "@/hooks/useCartAnimation";
 // import StarRating from "@/components/StarRating";
 import ReviewList from "@/components/ReviewList";
@@ -104,33 +104,13 @@ export default function ProductPage() {
         <Box className="product-page-root">
             <Box className="product-page-container">
                     {/* Breadcrumb Navigation */}
-                    <Box className="product-breadcrumbs">
-                        <Link href="/" className="link-unstyled">
-                            <Typography variant="body2" className="breadcrumb-text">
-                                home
-                            </Typography>
-                        </Link>
-                        <ChevronRightIcon className="icon-chevron" />
-                        <Link href="/catalog" className="link-unstyled">
-                            <Typography variant="body2" className="breadcrumb-text">
-                                catalog
-                            </Typography>
-                        </Link>
-                        <ChevronRightIcon className="icon-chevron" />
-                        {product?.category && (
-                            <>
-                                <Link href={`/catalog?category=${product.category.documentId}`} className="link-unstyled">
-                                    <Typography variant="body2" className="breadcrumb-text">
-                                        {product.category.name}
-                                    </Typography>
-                                </Link>
-                                <ChevronRightIcon className="icon-chevron" />
-                            </>
-                        )}
-                        <Typography variant="body2" className="breadcrumb-text">
-                            {product?.title || 'product'}
-                        </Typography>
-                    </Box>
+                    <Breadcrumbs 
+                        items={[
+                            { label: 'home', href: '/' },
+                            { label: 'Catalog', href: '/catalog' },
+                            { label: product?.title || 'product' }
+                        ]}
+                    />
 
                     {/* Main Product Block - Clean */}
                 <Box className="product-page-card product-page-card-padding">
@@ -328,7 +308,7 @@ export default function ProductPage() {
                 {/* Product marketing block */}
                 <Box className="product-marketing">
                     <Box className="product-marketing-wrap">
-                        <Typography variant="h5" className="product-marketing-title">why choose guru tea?</Typography>
+                        <Typography variant="h5" className="product-marketing-title">Why choose guru tea?</Typography>
                         <Box className="product-marketing-grid">
                             <Box className="product-marketing-card">
                                 <Box className="product-marketing-icon" aria-hidden>
@@ -341,22 +321,22 @@ export default function ProductPage() {
                                 <Box className="product-marketing-icon" aria-hidden>
                                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 1l3 7h7l-5.5 4 2 7L12 16l-6.5 3 2-7L2 8h7l3-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                                 </Box>
-                                <Typography className="product-marketing-head">4.8★ average rating</Typography>
+                                <Typography className="product-marketing-head">4.8 average rating</Typography>
                                 <Typography className="product-marketing-text">trusted by tea lovers — reviews you can taste.</Typography>
                             </Box>
                             <Box className="product-marketing-card">
                                 <Box className="product-marketing-icon" aria-hidden>
                                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 12l2-2 4 4 10-10 2 2-12 12-6-6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                                 </Box>
-                                <Typography className="product-marketing-head">ethically sourced</Typography>
-                                <Typography className="product-marketing-text">we work directly with small farms at fair prices.</Typography>
+                                <Typography className="product-marketing-head">expert curation</Typography>
+                                <Typography className="product-marketing-text">hand-selected teas from renowned gardens worldwide.</Typography>
                             </Box>
                             <Box className="product-marketing-card">
                                 <Box className="product-marketing-icon" aria-hidden>
                                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                                 </Box>
-                                <Typography className="product-marketing-head">30‑day taste guarantee</Typography>
-                                <Typography className="product-marketing-text">not in love? we’ll make it right or refund you.</Typography>
+                                <Typography className="product-marketing-head">satisfaction guaranteed</Typography>
+                                <Typography className="product-marketing-text">love it or your money back — no questions asked.</Typography>
                             </Box>
                         </Box>
                     </Box>

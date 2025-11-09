@@ -30,38 +30,41 @@ export default function TeaProcess({
           <Grid size={{ xs: 12, md: 6 }}>
               <Box sx={{ pr: { md: 4 } }}>
               <Typography variant="h3" sx={{ 
-                fontWeight: 800, 
-                mb: 3,
+                fontWeight: 700, 
+                mb: 4,
                 fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                textTransform: 'lowercase',
-                letterSpacing: '-0.02em',
-                fontSize: { xs: '2rem', md: '2.5rem' },
+                textTransform: 'none',
+                letterSpacing: '-0.025em',
+                fontSize: { xs: '2.25rem', md: '3rem' },
+                lineHeight: 1.2,
                 color: '#1a1a1a'
               }}>
-                premium tea collection
+                Premium tea collection
               </Typography>
               <Typography variant="body1" sx={{ 
-                mb: 3,
+                mb: 2.5,
                 fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                textTransform: 'lowercase',
-                letterSpacing: '0.02em',
-                fontSize: '1rem',
-                lineHeight: 1.7,
-                color: '#666666'
+                textTransform: 'none',
+                letterSpacing: '-0.01em',
+                fontSize: { xs: '1rem', md: '1.125rem' },
+                lineHeight: 1.8,
+                fontWeight: 300,
+                color: '#4a4a4a'
               }}>
-                we carefully select the finest tea leaves from renowned gardens around the world. 
-                our expert tasters evaluate each batch for aroma, flavor, and quality, ensuring 
+                We carefully select the finest tea leaves from renowned gardens around the world. 
+                Our expert tasters evaluate each batch for aroma, flavor, and quality, ensuring 
                 only the most exceptional teas reach your cup.
               </Typography>
               <Typography variant="body1" sx={{ 
                 fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                textTransform: 'lowercase',
-                letterSpacing: '0.02em',
-                fontSize: '1rem',
-                lineHeight: 1.7,
-                color: '#666666'
+                textTransform: 'none',
+                letterSpacing: '-0.01em',
+                fontSize: { xs: '1rem', md: '1.125rem' },
+                lineHeight: 1.8,
+                fontWeight: 300,
+                color: '#4a4a4a'
               }}>
-                from traditional chinese gardens to modern japanese plantations, we source 
+                From traditional chinese gardens to modern japanese plantations, we source 
                 directly from farmers who share our commitment to sustainable and ethical practices.
               </Typography>
               </Box>
@@ -111,38 +114,41 @@ export default function TeaProcess({
           <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
               <Box sx={{ pl: { md: 4 } }}>
               <Typography variant="h3" sx={{ 
-                fontWeight: 800, 
-                mb: 3,
+                fontWeight: 700, 
+                mb: 4,
                 fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                textTransform: 'lowercase',
-                letterSpacing: '-0.02em',
-                fontSize: { xs: '2rem', md: '2.5rem' },
+                textTransform: 'none',
+                letterSpacing: '-0.025em',
+                fontSize: { xs: '2.25rem', md: '3rem' },
+                lineHeight: 1.2,
                 color: '#1a1a1a'
               }}>
-                meticulous sorting & grading
+                Meticulous sorting & grading
               </Typography>
               <Typography variant="body1" sx={{ 
-                mb: 3,
+                mb: 2.5,
                 fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                textTransform: 'lowercase',
-                letterSpacing: '0.02em',
-                fontSize: '1rem',
-                lineHeight: 1.7,
-                color: '#666666'
+                textTransform: 'none',
+                letterSpacing: '-0.01em',
+                fontSize: { xs: '1rem', md: '1.125rem' },
+                lineHeight: 1.8,
+                fontWeight: 300,
+                color: '#4a4a4a'
               }}>
-                each tea leaf is hand-sorted by our skilled artisans, who separate the finest 
-                buds and leaves from the rest. this meticulous process ensures consistent 
+                Each tea leaf is hand-sorted by our skilled artisans, who separate the finest 
+                buds and leaves from the rest. This meticulous process ensures consistent 
                 quality and optimal flavor extraction in every cup.
               </Typography>
               <Typography variant="body1" sx={{ 
                 fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                textTransform: 'lowercase',
-                letterSpacing: '0.02em',
-                fontSize: '1rem',
-                lineHeight: 1.7,
-                color: '#666666'
+                textTransform: 'none',
+                letterSpacing: '-0.01em',
+                fontSize: { xs: '1rem', md: '1.125rem' },
+                lineHeight: 1.8,
+                fontWeight: 300,
+                color: '#4a4a4a'
               }}>
-                we grade our teas using traditional methods combined with modern quality 
+                We grade our teas using traditional methods combined with modern quality 
                 control, guaranteeing that only the highest grade teas bear our name.
               </Typography>
               </Box>
@@ -154,38 +160,41 @@ export default function TeaProcess({
           <Grid size={{ xs: 12, md: 6 }}>
               <Box sx={{ pr: { md: 4 } }}>
               <Typography variant="h3" sx={{ 
-                fontWeight: 800, 
-                mb: 3,
+                fontWeight: 700, 
+                mb: 4,
                 fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                textTransform: 'lowercase',
-                letterSpacing: '-0.02em',
-                fontSize: { xs: '2rem', md: '2.5rem' },
+                textTransform: 'none',
+                letterSpacing: '-0.025em',
+                fontSize: { xs: '2.25rem', md: '3rem' },
+                lineHeight: 1.2,
                 color: '#1a1a1a'
               }}>
-                health & wellness benefits
+                Health & wellness benefits
               </Typography>
               <Typography variant="body1" sx={{ 
-                mb: 3,
+                mb: 2.5,
                 fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                textTransform: 'lowercase',
-                letterSpacing: '0.02em',
-                fontSize: '1rem',
-                lineHeight: 1.7,
-                color: '#666666'
+                textTransform: 'none',
+                letterSpacing: '-0.01em',
+                fontSize: { xs: '1rem', md: '1.125rem' },
+                lineHeight: 1.8,
+                fontWeight: 300,
+                color: '#4a4a4a'
               }}>
-                our premium teas are rich in antioxidants, polyphenols, and other beneficial 
-                compounds that support your overall well-being. from boosting immunity to 
+                Our premium teas are rich in antioxidants, polyphenols, and other beneficial 
+                compounds that support your overall well-being. From boosting immunity to 
                 promoting relaxation, each blend offers unique health benefits.
               </Typography>
               <Typography variant="body1" sx={{ 
                 fontFamily: '"Space Grotesk", "Inter", "Helvetica Neue", sans-serif',
-                textTransform: 'lowercase',
-                letterSpacing: '0.02em',
-                fontSize: '1rem',
-                lineHeight: 1.7,
-                color: '#666666'
+                textTransform: 'none',
+                letterSpacing: '-0.01em',
+                fontSize: { xs: '1rem', md: '1.125rem' },
+                lineHeight: 1.8,
+                fontWeight: 300,
+                color: '#4a4a4a'
               }}>
-                whether you seek the energizing properties of green tea or the calming effects 
+                Whether you seek the energizing properties of green tea or the calming effects 
                 of chamomile, our carefully curated selection supports your health journey.
               </Typography>
               </Box>

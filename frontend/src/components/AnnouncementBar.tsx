@@ -5,10 +5,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const MESSAGES = [
-  { text: "Свіжа поставка матча 💚", href: "/catalog?category=Matcha", linkTitle: "Матча" },
-  { text: "Безкоштовна доставка від 2000 грн" },
-  { text: "Спробуй справжній матча лате в саше", href: "/catalog?search=лате", linkTitle: "Матча в саше" },
-  { text: "Новинки фермерського чаю 💕", href: "/catalog?tag=new" },
+  { text: "Fresh matcha just arrived 💚", href: "/catalog?category=Matcha", linkTitle: "Matcha" },
+  { text: "Free shipping over $200" },
+  { text: "Try real matcha latte in sachets", href: "/catalog?search=latte", linkTitle: "Matcha sachets" },
+  { text: "New farmer's teas 💕", href: "/catalog?tag=new" },
 ];
 
 export default function AnnouncementBar() {

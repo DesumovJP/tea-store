@@ -71,9 +71,9 @@ export default function ProductCard({ product, variant = "catalog", onAddToCart 
               />
             ) : (
               <Box className="product-card-missing-image">
-                <Box component="svg" width={88} height={88} viewBox="0 0 64 64" fill="none">
-                  <circle cx="32" cy="32" r="30" fill="#f5f9f5" />
-                  <g fill="currentColor">
+                <Box component="svg" viewBox="0 0 64 64" fill="none" sx={{ width: '100%', height: '100%', maxWidth: '120px', maxHeight: '120px' }}>
+                  <circle cx="32" cy="32" r="30" fill="#f5f5f5" />
+                  <g fill="currentColor" opacity="0.4">
                     <path d="M10 24c0-1.657 1.343-3 3-3h28c1.657 0 3 1.343 3 3v8c0 7.732-6.268 14-14 14h-6C16.268 46 10 39.732 10 32v-8z" />
                     <path d="M44 26h4a6 6 0 0 1 0 12h-2.5a2 2 0 1 1 0-4H48a 2 2 0 0 0 0-4h-4v-4z" />
                     <path d="M12 50h40a2 2 0 1 1 0 4H12a2 2 0 1 1 0-4z" />

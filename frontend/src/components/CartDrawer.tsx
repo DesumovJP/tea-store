@@ -49,7 +49,7 @@ export default function CartDrawer({
                 <Box className="cart-header">
                     <Box className="cart-header-bar">
                         <Typography 
-                            variant="h4" 
+                            variant="h5" 
                             className="hipster-heading cart-title"
                         >
                             shopping cart ({totalItems} items)

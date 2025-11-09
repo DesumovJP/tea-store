@@ -162,7 +162,7 @@ export default function AdminPage() {
             const res = await fetch("/api/admin/product", { method: "POST", body: fd });
             const json = await res.json();
             if (!res.ok) throw new Error(json?.error || "Failed");
-            setMessage("Продукт створено успішно");
+            setMessage("Product created successfully");
             setTimeout(() => setMessage(null), 5000);
             setMessageType('success');
             form.reset();
@@ -184,7 +184,7 @@ export default function AdminPage() {
             const prodJson = await prodRes.json();
             setProducts(prodJson.data?.products || []);
         } catch (err) {
-            const msg = err instanceof Error ? err.message : "Помилка створення продукту";
+            const msg = err instanceof Error ? err.message : "Error creating product";
             setMessage(msg);
             setTimeout(() => setMessage(null), 5000);
             setMessageType('error');
@@ -223,7 +223,7 @@ export default function AdminPage() {
             
             if (!res.ok) throw new Error(json?.error || "Failed");
             
-            setMessage("Продукт оновлено успішно");
+            setMessage("Product updated successfully");
             setTimeout(() => setMessage(null), 5000);
             setMessageType('success');
             setEditOpen(false);
@@ -247,7 +247,7 @@ export default function AdminPage() {
             const prodJson = await prodRes.json();
             setProducts(prodJson.data?.products || []);
         } catch (err) {
-            const msg = err instanceof Error ? err.message : "Помилка оновлення продукту";
+            const msg = err instanceof Error ? err.message : "Error updating product";
             setMessage(msg);
             setTimeout(() => setMessage(null), 5000);
             setMessageType('error');
@@ -268,7 +268,7 @@ export default function AdminPage() {
             const json = await res.json();
             if (!res.ok) throw new Error(json?.error || "Failed");
             
-            setMessage("Продукт видалено успішно");
+            setMessage("Product deleted successfully");
             setTimeout(() => setMessage(null), 5000);
             setMessageType('success');
             setDeleteConfirm(null);
@@ -290,7 +290,7 @@ export default function AdminPage() {
             const prodJson = await prodRes.json();
             setProducts(prodJson.data?.products || []);
         } catch (err) {
-            const msg = err instanceof Error ? err.message : "Помилка видалення продукту";
+            const msg = err instanceof Error ? err.message : "Error deleting product";
             setMessage(msg);
             setTimeout(() => setMessage(null), 5000);
             setMessageType('error');
@@ -457,8 +457,21 @@ export default function AdminPage() {
     };
 
     return (
-        <Box component="section" sx={{ maxWidth: 1200, mx: "auto", my: 4, p: 2 }}>
-            <Typography variant="h4" gutterBottom>Admin Panel</Typography>
+        <Box component="section" sx={{ maxWidth: 1200, mx: "auto", mt: { xs: 4, md: 6 }, mb: { xs: 3, md: 4 }, px: { xs: 2, md: 3 }, py: { xs: 2, md: 3 } }}>
+            <Typography 
+                variant="h4" 
+                sx={{ 
+                    mb: { xs: 2, md: 3 },
+                    fontWeight: 600,
+                    fontSize: { xs: '1.75rem', md: '2rem' },
+                    fontFamily: 'var(--heading-font)',
+                    letterSpacing: '-0.02em',
+                    color: '#1a1a1a',
+                    textTransform: 'capitalize'
+                }}
+            >
+                Admin Panel
+            </Typography>
             
             {/* Tabs */}
             <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
@@ -499,38 +512,153 @@ export default function AdminPage() {
             {activeTab === 'products' && (
                 <>
                     {/* Create Product Form */}
-            <Card sx={{ mb: 4, border: '1px solid transparent', bgcolor: '#f8f8f8', boxShadow: '0 0.25rem 1rem rgba(0,0,0,0)' }}>
-                <CardContent>
-                    <Typography variant="h6" gutterBottom>Create New Product</Typography>
-                    <Box component="form" onSubmit={onSubmit} encType="multipart/form-data" sx={{ display: "grid", gap: 2 }}>
-                        <TextField name="title" label="Title" required fullWidth />
-                        <TextField name="slug" label="Slug" required fullWidth />
-                        <TextField name="price" label="Price" type="number" required fullWidth />
-                        <TextField name="description" label="Description" multiline rows={4} fullWidth />
-                        <TextField name="shortDescription" label="Short Description (for catalog card)" fullWidth />
+            <Card sx={{ 
+                mb: 4, 
+                border: '0.5px solid rgba(0,0,0,0.06)', 
+                bgcolor: '#ffffff', 
+                borderRadius: 0,
+                boxShadow: '0 1px 2px rgba(0,0,0,0.03), 0 2px 8px rgba(0,0,0,0.02)'
+            }}>
+                <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+                    <Typography 
+                        variant="h6" 
+                        sx={{ 
+                            mb: 3,
+                            fontWeight: 600,
+                            fontSize: { xs: '1.25rem', md: '1.5rem' },
+                            fontFamily: 'var(--heading-font)',
+                            letterSpacing: '-0.02em',
+                            color: '#1a1a1a',
+                            textTransform: 'capitalize'
+                        }}
+                    >
+                        Create New Product
+                    </Typography>
+                    <Box 
+                        component="form" 
+                        onSubmit={onSubmit} 
+                        encType="multipart/form-data" 
+                        sx={{ display: "grid", gap: { xs: 2, md: 2.5 } }}
+                        className="admin-create-form"
+                    >
+                        <Grid container spacing={{ xs: 1.5, md: 2 }}>
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <TextField 
+                                    name="title" 
+                                    label="Title" 
+                                    required 
+                                    fullWidth 
+                                    size="small"
+                                    className="admin-input"
+                                />
+                            </Grid>
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <TextField 
+                                    name="slug" 
+                                    label="Slug" 
+                                    required 
+                                    fullWidth 
+                                    size="small"
+                                    className="admin-input"
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid container spacing={{ xs: 1.5, md: 2 }}>
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <TextField 
+                                    name="price" 
+                                    label="Price" 
+                                    type="number" 
+                                    required 
+                                    fullWidth 
+                                    size="small"
+                                    className="admin-input"
+                                />
+                            </Grid>
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <TextField 
+                                    name="categoryId" 
+                                    select 
+                                    label="Category" 
+                                    fullWidth
+                                    defaultValue=""
+                                    required
+                                    size="small"
+                                    className="admin-input"
+                                >
+                                    <MenuItem value="">Select a category</MenuItem>
+                                    {categories.map((c) => (
+                                        <MenuItem key={c.documentId} value={c.documentId}>{c.name}</MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid>
+                        </Grid>
                         <TextField 
-                            name="categoryId" 
-                            select 
-                            label="Category" 
-                            fullWidth
-                            defaultValue=""
-                            required
-                        >
-                            <MenuItem value="">Select a category</MenuItem>
-                            {categories.map((c) => (
-                                <MenuItem key={c.documentId} value={c.documentId}>{c.name}</MenuItem>
-                            ))}
-                        </TextField>
+                            name="description" 
+                            label="Description" 
+                            multiline 
+                            rows={4} 
+                            fullWidth 
+                            size="small"
+                            className="admin-input"
+                        />
+                        <TextField 
+                            name="shortDescription" 
+                            label="Short Description (for catalog card)" 
+                            fullWidth 
+                            size="small"
+                            className="admin-input"
+                        />
                         <MultiImageUpload
                             files={selectedFiles}
                             onFilesChange={setSelectedFiles}
                             maxFiles={4}
                             disabled={loading}
                         />
-                        <Box sx={{ display: "flex", gap: 2 }}>
-                            <Button type="submit" disabled={loading} className="btn-shared btn-shared-primary" variant="contained">Create</Button>
+                        <Box sx={{ display: "flex", gap: 2, mt: 1 }}>
+                            <Button 
+                                type="submit" 
+                                disabled={loading} 
+                                variant="contained"
+                                sx={{
+                                    px: 3,
+                                    py: 1.25,
+                                    textTransform: 'none',
+                                    fontWeight: 500,
+                                    fontSize: '0.95rem',
+                                    fontFamily: 'var(--app-font)',
+                                    letterSpacing: '-0.01em',
+                                    borderRadius: 0,
+                                    boxShadow: 'none',
+                                    backgroundColor: '#1a1a1a',
+                                    color: '#ffffff',
+                                    transition: 'background-color 0.2s ease',
+                                    '&:hover': {
+                                        boxShadow: 'none',
+                                        backgroundColor: '#000000'
+                                    },
+                                    '&:disabled': {
+                                        backgroundColor: '#9ca3af',
+                                        color: '#ffffff'
+                                    }
+                                }}
+                            >
+                                {loading ? "Creating..." : "Create Product"}
+                            </Button>
                         </Box>
-                        {message && <Typography color="text.secondary">{message}</Typography>}
+                        {message && (
+                            <Typography 
+                                sx={{ 
+                                    mt: 1,
+                                    color: messageType === 'error' ? '#dc2626' : '#66bb6a',
+                                    fontSize: '0.875rem',
+                                    fontFamily: 'var(--app-font)',
+                                    letterSpacing: '-0.01em'
+                                }}
+                            >
+                                {message}
+                            </Typography>
+                        )}
                     </Box>
                 </CardContent>
             </Card>
@@ -896,7 +1024,15 @@ export default function AdminPage() {
                 setEditOpen(false);
                 setEditSelectedFiles([]);
             }} maxWidth="md" fullWidth>
-                <DialogTitle>
+                <DialogTitle sx={{ 
+                    fontWeight: 600,
+                    fontSize: { xs: '1.25rem', md: '1.5rem' },
+                    fontFamily: 'var(--heading-font)',
+                    letterSpacing: '-0.02em',
+                    color: '#1a1a1a',
+                    textTransform: 'capitalize',
+                    pb: 2
+                }}>
                     Edit Product
                     <IconButton
                         aria-label="close"
@@ -911,80 +1047,156 @@ export default function AdminPage() {
                 </DialogTitle>
                 <DialogContent>
                     {editingProduct && (
-                        <Box component="form" id="edit-form" onSubmit={handleEditSubmit} encType="multipart/form-data" sx={{ display: "grid", gap: 2, mt: 1 }}>
-                            <TextField 
-                                name="title" 
-                                label="Title" 
-                                required 
-                                fullWidth 
-                                defaultValue={editingProduct.title || ''}
-                            />
-                            <TextField 
-                                name="slug" 
-                                label="Slug" 
-                                required 
-                                fullWidth 
-                                defaultValue={editingProduct.slug || ''}
-                            />
-                            <TextField 
-                                name="price" 
-                                label="Price" 
-                                type="number" 
-                                required 
-                                fullWidth 
-                                defaultValue={editingProduct.price || ''}
-                            />
+                        <Box component="form" id="edit-form" onSubmit={handleEditSubmit} encType="multipart/form-data" sx={{ display: "grid", gap: { xs: 2, md: 2.5 }, mt: 1 }}>
+                            <Grid container spacing={{ xs: 1.5, md: 2 }}>
+                                <Grid size={{ xs: 12, md: 6 }}>
+                                    <TextField 
+                                        name="title" 
+                                        label="Title" 
+                                        required 
+                                        fullWidth 
+                                        size="small"
+                                        className="admin-input"
+                                        defaultValue={editingProduct.title || ''}
+                                    />
+                                </Grid>
+                                <Grid size={{ xs: 12, md: 6 }}>
+                                    <TextField 
+                                        name="slug" 
+                                        label="Slug" 
+                                        required 
+                                        fullWidth 
+                                        size="small"
+                                        className="admin-input"
+                                        defaultValue={editingProduct.slug || ''}
+                                        disabled
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={{ xs: 1.5, md: 2 }}>
+                                <Grid size={{ xs: 12, md: 6 }}>
+                                    <TextField 
+                                        name="price" 
+                                        label="Price" 
+                                        type="number" 
+                                        required 
+                                        fullWidth 
+                                        size="small"
+                                        className="admin-input"
+                                        defaultValue={editingProduct.price || ''}
+                                    />
+                                </Grid>
+                                <Grid size={{ xs: 12, md: 6 }}>
+                                    <TextField 
+                                        name="categoryId" 
+                                        select 
+                                        label="Category" 
+                                        fullWidth
+                                        size="small"
+                                        className="admin-input"
+                                        defaultValue={editingProduct.category?.name ? categories.find(c => c.name === editingProduct.category?.name)?.documentId || '' : ''}
+                                        disabled
+                                    >
+                                        <MenuItem value="">Select a category</MenuItem>
+                                        {categories.map((c) => (
+                                            <MenuItem key={c.documentId} value={c.documentId}>{c.name}</MenuItem>
+                                        ))}
+                                    </TextField>
+                                </Grid>
+                            </Grid>
                             <TextField 
                                 name="description" 
                                 label="Description" 
                                 multiline 
                                 rows={4} 
                                 fullWidth 
+                                size="small"
+                                className="admin-input"
                                 defaultValue={editingProduct.description || ''}
                             />
                             <TextField 
                                 name="shortDescription" 
                                 label="Short Description (for catalog card)" 
                                 fullWidth 
+                                size="small"
+                                className="admin-input"
                                 defaultValue={editingProduct.shortDescription || ''}
                             />
-                            <TextField 
-                                name="categoryId" 
-                                select 
-                                label="Category" 
-                                fullWidth
-                                defaultValue={editingProduct.category?.name ? categories.find(c => c.name === editingProduct.category?.name)?.documentId || '' : ''}
-                            >
-                                <MenuItem value="">Select a category</MenuItem>
-                                {categories.map((c) => (
-                                    <MenuItem key={c.documentId} value={c.documentId}>{c.name}</MenuItem>
-                                ))}
-                            </TextField>
                             <MultiImageUpload
                                 files={editSelectedFiles}
                                 onFilesChange={setEditSelectedFiles}
                                 maxFiles={4}
                                 disabled={loading}
                             />
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="body2" sx={{ 
+                                color: '#6b7280',
+                                fontSize: '0.875rem',
+                                fontFamily: 'var(--app-font)',
+                                letterSpacing: '-0.01em'
+                            }}>
                                 Leave empty to keep current images
                             </Typography>
                         </Box>
                     )}
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => {
-                        setEditOpen(false);
-                        setEditSelectedFiles([]);
-                    }} className="btn-shared">Cancel</Button>
+                <DialogActions sx={{ px: 3, pb: 2, gap: 1.5 }}>
+                    <Button 
+                        onClick={() => {
+                            setEditOpen(false);
+                            setEditSelectedFiles([]);
+                        }}
+                        sx={{
+                            px: 2.5,
+                            py: 1,
+                            textTransform: 'none',
+                            fontWeight: 400,
+                            fontSize: '0.95rem',
+                            fontFamily: 'var(--app-font)',
+                            letterSpacing: '-0.01em',
+                            borderRadius: 0,
+                            boxShadow: 'none',
+                            border: '0.5px solid rgba(0,0,0,0.2)',
+                            color: '#1a1a1a',
+                            backgroundColor: 'transparent',
+                            transition: 'border-color 0.2s ease, background-color 0.2s ease',
+                            '&:hover': {
+                                boxShadow: 'none',
+                                borderColor: 'rgba(0,0,0,0.3)',
+                                backgroundColor: 'rgba(0,0,0,0.02)'
+                            }
+                        }}
+                    >
+                        Cancel
+                    </Button>
                     <Button 
                         type="submit"
                         form="edit-form"
                         disabled={loading} 
-                        className="btn-shared btn-shared-primary" 
                         variant="contained"
+                        sx={{
+                            px: 3,
+                            py: 1.25,
+                            textTransform: 'none',
+                            fontWeight: 500,
+                            fontSize: '0.95rem',
+                            fontFamily: 'var(--app-font)',
+                            letterSpacing: '-0.01em',
+                            borderRadius: 0,
+                            boxShadow: 'none',
+                            backgroundColor: '#1a1a1a',
+                            color: '#ffffff',
+                            transition: 'background-color 0.2s ease',
+                            '&:hover': {
+                                boxShadow: 'none',
+                                backgroundColor: '#000000'
+                            },
+                            '&:disabled': {
+                                backgroundColor: '#9ca3af',
+                                color: '#ffffff'
+                            }
+                        }}
                     >
-                        Update
+                        {loading ? "Updating..." : "Update Product"}
                     </Button>
                 </DialogActions>
             </Dialog>

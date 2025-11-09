@@ -171,15 +171,17 @@ export default function HappyCustomers({ reviews, subtitle }: HappyCustomersProp
                   </Box>
 
                   {r.comment && (
-                  <Typography variant="body2" className="happy-comment">
-                      {r.comment}
-                    </Typography>
+                    <Box className="happy-comment-wrapper">
+                      <Typography variant="body2" className="happy-comment">
+                        {r.comment}
+                      </Typography>
+                    </Box>
                   )}
                 </Box>
 
                 {/* Footer with user info and rating */}
                 <Box className="happy-card-footer">
-                  {/* User info row */}
+                  {/* User info row with product name */}
                   <Box className="happy-user-row">
                     <Box
                       component="img"
@@ -188,27 +190,27 @@ export default function HappyCustomers({ reviews, subtitle }: HappyCustomersProp
                       className="happy-avatar"
                     />
                     <Box style={{ minWidth: 0, flex: 1 }}>
-                      <Typography variant="subtitle2" className="happy-user-name">
-                        {r.authorName}
-                      </Typography>
-                      <Typography variant="caption" className="happy-user-date">
-                        {new Date(r.createdAt || new Date().toISOString()).toLocaleDateString('uk-UA', { year: 'numeric', month: 'short' })}
-                      </Typography>
-                    </Box>
-                  </Box>
-
-                  {/* Product and rating row */}
-                  <Box className="happy-product-row">
-                    {r.product?.title && (
-                      <Typography variant="caption" className="happy-product-title">
-                        {formatTeaTitle(r.product.title)}
-                      </Typography>
-                    )}
-                    <Box className="happy-rating-badge">
-                      <StarRoundedIcon className="happy-rating-star" />
-                      <Typography variant="caption" className="happy-rating-value">
-                        {(Number(r.rating) || 0).toFixed(1)}
-                      </Typography>
+                      <Box className="happy-user-name-row">
+                        <Typography variant="subtitle2" className="happy-user-name">
+                          {r.authorName}
+                        </Typography>
+                        {r.product?.title && (
+                          <Typography variant="caption" className="happy-product-title">
+                            {formatTeaTitle(r.product.title)}
+                          </Typography>
+                        )}
+                      </Box>
+                      <Box className="happy-date-rating-row">
+                        <Typography variant="caption" className="happy-user-date">
+                          {new Date(r.createdAt || new Date().toISOString()).toLocaleDateString('uk-UA', { year: 'numeric', month: 'short' })}
+                        </Typography>
+                        <Box className="happy-rating-badge">
+                          <StarRoundedIcon className="happy-rating-star" />
+                          <Typography variant="caption" className="happy-rating-value">
+                            {(Number(r.rating) || 0).toFixed(1)}
+                          </Typography>
+                        </Box>
+                      </Box>
                     </Box>
                   </Box>
                 </Box>
@@ -235,42 +237,46 @@ export default function HappyCustomers({ reviews, subtitle }: HappyCustomersProp
                   </Box>
 
                   {r.comment && (
-                    <Typography variant="body2" className="happy-comment">
-                      {r.comment}
-                    </Typography>
+                    <Box className="happy-comment-wrapper">
+                      <Typography variant="body2" className="happy-comment">
+                        {r.comment}
+                      </Typography>
+                    </Box>
                   )}
                 </Box>
 
                 {/* Footer with border */}
-                <Box className="happy-card-footer" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  {/* First row: reviewer info */}
+                <Box className="happy-card-footer">
+                  {/* User info row with product name */}
                   <Box className="happy-user-row">
                     <Box component="img" 
                       src={getRandomAvatar(r.documentId)} 
                       alt="Reviewer avatar" 
                       className="happy-avatar"
                     />
-                    <Box style={{ flex: 1, minWidth: 0 }}>
-                      <Typography variant="body2" className="happy-user-name">
-                        {r.authorName || 'Anonymous'}
-                      </Typography>
-                      <Typography variant="caption" className="happy-user-date">
-                        {r.createdAt ? new Date(r.createdAt).toLocaleDateString() : ''}
-                      </Typography>
+                    <Box style={{ minWidth: 0, flex: 1 }}>
+                      <Box className="happy-user-name-row">
+                        <Typography variant="subtitle2" className="happy-user-name">
+                          {r.authorName || 'Anonymous'}
+                        </Typography>
+                        {r.product?.title && (
+                          <Typography variant="caption" className="happy-product-title">
+                            {formatTeaTitle(r.product.title)}
+                          </Typography>
+                        )}
+                      </Box>
+                      <Box className="happy-date-rating-row">
+                        <Typography variant="caption" className="happy-user-date">
+                          {new Date(r.createdAt || new Date().toISOString()).toLocaleDateString('uk-UA', { year: 'numeric', month: 'short' })}
+                        </Typography>
+                        <Box className="happy-rating-badge">
+                          <StarRoundedIcon className="happy-rating-star" />
+                          <Typography variant="caption" className="happy-rating-value">
+                            {(Number(r.rating) || 0).toFixed(1)}
+                          </Typography>
+                        </Box>
+                      </Box>
                     </Box>
-                    <Box className="happy-rating-badge">
-                      <StarRoundedIcon className="happy-rating-star" />
-                      <Typography variant="caption" className="happy-rating-value">
-                        {r.rating || 0}
-                      </Typography>
-                    </Box>
-                  </Box>
-
-                  {/* Second row: product title */}
-                  <Box className="happy-product-row">
-                    <Typography variant="body2" className="happy-product-title">
-                      {r.product?.title ? truncateTitle(r.product.title) : 'Unknown Product'}
-                    </Typography>
                   </Box>
                 </Box>
               </Box>

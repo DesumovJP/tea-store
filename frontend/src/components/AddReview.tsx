@@ -117,6 +117,8 @@ export default function AddReview({ productId, onReviewAdded }: AddReviewProps) 
             required
             className="input"
           />
+        </Box>
+        <Box className="review-form-field review-field input input--light">
           <TextField
             fullWidth
             label="your email *"

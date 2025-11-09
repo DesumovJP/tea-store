@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 export type CartItemData = {
   id: string;
@@ -29,7 +29,16 @@ export default function CartItemCard({
   onUpdateQty: (id: string, qty: number) => void;
 }) {
   return (
-    <Box sx={{ p: 2, bgcolor: '#ffffff', borderRadius: '0.25rem', border: '1px solid #e0e0e0', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)', mb: 2 }}>
+    <Box sx={{ 
+        p: { xs: 1.5, md: 2 }, 
+        bgcolor: '#ffffff', 
+        borderRadius: 0, 
+        border: '0.5px solid rgba(0,0,0,0.06)', 
+        boxShadow: 
+            '0 1px 2px rgba(0,0,0,0.03), 0 2px 8px rgba(0,0,0,0.02)',
+        mb: 2,
+        transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease'
+    }}>
       <Grid container spacing={2} alignItems="center">
         <Grid size={{ xs: 4, md: 4 }}>
           <Box sx={{ width: '100%', height: { xs: '6rem', md: '8rem' }, borderRadius: '0.25rem', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -42,12 +51,45 @@ export default function CartItemCard({
         </Grid>
         <Grid size={{ xs: 5, md: 5 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <Typography variant="h6" sx={{ fontWeight: 600, color: '#2c3a2d', fontSize: '1rem', lineHeight: 1.2 }}>{item.name}</Typography>
-            <Typography variant="body2" sx={{ color: '#5a6b5a', fontSize: '0.875rem', fontWeight: 500 }}>{item.categoryName || 'Premium Quality'}</Typography>
-            <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 0.5, flexWrap: 'wrap' }}>
-              <Typography variant="h6" sx={{ fontWeight: 700, color: '#2c3a2d', fontSize: '1.125rem' }}>${item.price.toFixed(2)}</Typography>
-              <Typography variant="body2" sx={{ color: '#6b7c6b', fontSize: '0.875rem', fontWeight: 500 }}>/ 100g × {item.quantity}</Typography>
-              <Typography variant="body2" sx={{ color: '#3b4d3c', fontSize: '0.875rem', fontWeight: 600 }}>= ${(item.price * item.quantity).toFixed(2)}</Typography>
+            <Typography variant="h6" sx={{ 
+                fontWeight: 600, 
+                color: '#1a1a1a', 
+                fontSize: { xs: '0.95rem', md: '1rem' }, 
+                lineHeight: 1.3,
+                fontFamily: 'var(--heading-font)',
+                letterSpacing: '-0.01em',
+                mb: 0.5
+            }}>{item.name}</Typography>
+            <Typography variant="body2" sx={{ 
+                color: '#6b7280', 
+                fontSize: '0.875rem', 
+                fontWeight: 300,
+                fontFamily: 'var(--app-font)',
+                letterSpacing: '-0.01em',
+                mb: 1
+            }}>{item.categoryName || 'Premium Quality'}</Typography>
+            <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 0.5, flexWrap: 'wrap', mb: 1.5 }}>
+              <Typography variant="h6" sx={{ 
+                fontWeight: 600, 
+                color: '#1a1a1a', 
+                fontSize: { xs: '1rem', md: '1.125rem' },
+                fontFamily: 'var(--app-font)',
+                letterSpacing: '-0.01em'
+              }}>${item.price.toFixed(2)}</Typography>
+              <Typography variant="body2" sx={{ 
+                color: '#6b7280', 
+                fontSize: '0.875rem', 
+                fontWeight: 300,
+                fontFamily: 'var(--app-font)',
+                letterSpacing: '-0.01em'
+              }}>/ 100g × {item.quantity}</Typography>
+              <Typography variant="body2" sx={{ 
+                color: '#1a1a1a', 
+                fontSize: '0.875rem', 
+                fontWeight: 500,
+                fontFamily: 'var(--app-font)',
+                letterSpacing: '-0.01em'
+              }}>= ${(item.price * item.quantity).toFixed(2)}</Typography>
             </Box>
             <Box className="qty-box">
               <IconButton size="small" onClick={() => onUpdateQty(item.id, Math.max(1, item.quantity - 1))} className="qty-btn qty-btn--left">
@@ -62,7 +104,9 @@ export default function CartItemCard({
         </Grid>
         <Grid size={{ xs: 3, md: 3 }}>
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-            <Button size="small" onClick={() => onRemove(item.id)} className="btn btn--remove btn--sm" startIcon={<DeleteIcon />}>remove</Button>
+            <IconButton size="small" onClick={() => onRemove(item.id)} className="cart-remove-icon" aria-label="remove item">
+              <DeleteOutlineIcon sx={{ fontSize: 18 }} />
+            </IconButton>
           </Box>
         </Grid>
       </Grid>
