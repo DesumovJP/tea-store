@@ -91,15 +91,17 @@ jspm_packages/
 .tern-port
 
 # Strapi specific
-cms/.tmp/
+cms/.tmp/*
+!cms/.tmp/data.db
 cms/build/
 cms/dist/
 cms/exports/
 cms/.cache/
 
-# Uploads
+# Uploads - allow cms/public/uploads
 uploads/
 public/uploads/
+!cms/public/uploads/
 
 
 
