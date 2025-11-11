@@ -86,7 +86,17 @@ export default async function Home() {
         ctaLabel: slogans[idx]?.ctaLabel ?? "Shop now",
     }));
 
-    const heroSlides = heroSlidesFallback;
+    // Use fallback slides but override the "taste the difference in every cup." image with provided CMS URL
+    const heroSlides = heroSlidesFallback.map((slide, idx) => {
+        // Right-top block (index 2) next to "Our Premium Tea" section
+        if (idx === 2) {
+            return {
+                ...slide,
+                src: "http://localhost:1337/uploads/Road_of_Tea_gallery_roadoftea_Instagram_photos_and_videos_812c1da8c3.jpeg",
+            };
+        }
+        return slide;
+    });
 
     // About image (ImgId = 6) with hashed fallback
     const aboutBlock = (blockImgs || []).find((b) => Number(b.ImgId) === 6);
@@ -246,17 +256,17 @@ export default async function Home() {
 
             {/* Top 4 Products with Most Reviews */}
             <Box className="home-products-section">
-                <Grid container spacing={3} className="container-1200 catalog-product-grid">
+                <Box className="home-products-grid">
                     {topProducts.map((product, index) => {
                         if (!product || !product.title) return null;
                         
                         return (
-                            <Grid key={product.documentId} size={{ xs: 6, sm: 6, md: 3, lg: 3 }}>
+                            <Box key={product.documentId} className="catalog-product-item">
                                 <HomeProductCard product={product} />
-                            </Grid>
+                            </Box>
                         );
                     })}
-                </Grid>
+                </Box>
                 
                 </Box>
 

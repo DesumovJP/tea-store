@@ -12,9 +12,9 @@ interface TeaProcessProps {
 
 export default function TeaProcess({ 
   images = {
-    collection: "http://localhost:1337/uploads/tea_2356770_1280_157c28a389.jpg",
+    collection: "http://localhost:1337/uploads/J_u_r_i_de2cdd2e06.jpeg",
     sorting: "http://localhost:1337/uploads/38624_1_e33b250554.jpg", 
-    health: "http://localhost:1337/uploads/6285_a52115f693.jpg"
+    health: "http://localhost:1337/uploads/5_quick_simple_ways_to_calm_your_mind_including_1_that_puts_a_brake_on_the_stress_response_doctor_says_75cc80b012.jpeg"
   }
 }: TeaProcessProps) {
   console.log('TeaProcess images:', images);

@@ -1,61 +1,156 @@
-# 🚀 Getting started with Strapi
+# CMS Backend - Guru Tea
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+Strapi 5 headless CMS for content management.
 
-### `develop`
+## 🚀 Development
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+```bash
+# Install dependencies
+yarn install
 
-```
-npm run develop
-# or
-yarn develop
-```
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your database and API configuration
 
-### `start`
+# Start development server
+yarn dev
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+# Build admin panel
+yarn build
 
-```
-npm run start
-# or
+# Start production server
 yarn start
 ```
 
-### `build`
+## 🔑 Environment Variables
 
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
+Create `.env` file with:
 
+```env
+HOST=0.0.0.0
+PORT=1337
+APP_KEYS=your_app_keys
+API_TOKEN_SALT=your_token_salt
+ADMIN_JWT_SECRET=your_admin_secret
+TRANSFER_TOKEN_SALT=your_transfer_salt
+JWT_SECRET=your_jwt_secret
+
+# Database
+DATABASE_CLIENT=sqlite
+DATABASE_FILENAME=.tmp/data.db
+
+# Or PostgreSQL
+# DATABASE_CLIENT=postgres
+# DATABASE_HOST=localhost
+# DATABASE_PORT=5432
+# DATABASE_NAME=strapi
+# DATABASE_USERNAME=strapi
+# DATABASE_PASSWORD=strapi
 ```
-npm run build
-# or
-yarn build
+
+## 📁 Content Types
+
+### **Product**
+- Title, Description, Price
+- Multiple Images
+- Category Relation
+- Reviews Relation
+- Featured Flag
+
+### **Category**
+- Name, Slug
+- Description
+- Products Relation
+
+### **Review**
+- Rating (1-5)
+- Comment, Author, Email
+- Images (optional)
+- Product Relation
+- Approved Flag
+
+### **Order**
+- Customer Info
+- Items (JSON)
+- Total Amount
+- Status (pending, paid, shipped, delivered)
+- Stripe Session ID
+
+### **Block Image**
+- Image ID
+- Image File
+- Alternative Text
+
+## 🛠️ API Endpoints
+
+### REST API
+- `GET /api/products` - List products
+- `GET /api/products/:id` - Get product
+- `POST /api/reviews` - Create review
+- `POST /api/orders` - Create order
+
+### GraphQL API
+- Endpoint: `/graphql`
+- Playground: `http://localhost:1337/graphql`
+
+Example query:
+```graphql
+query {
+  products {
+    documentId
+    title
+    price
+    images {
+      url
+    }
+    category {
+      name
+    }
+  }
+}
 ```
 
-## ⚙️ Deployment
+## 🔐 Permissions
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+Configure in: Settings → Roles → Public
 
-```
-yarn strapi deploy
-```
+**Public Access:**
+- Products: `find`, `findOne`
+- Categories: `find`, `findOne`  
+- Reviews: `find`, `create`
+- Block Images: `find`
 
-## 📚 Learn more
+**Authenticated Access:**
+- Orders: `create`, `find` (own)
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
+## 📦 Custom Routes
 
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
+Located in `src/api/*/routes/`:
+- Custom review moderation
+- Order processing with Stripe
+- Product lifecycle hooks
 
-## ✨ Community
+## 🗄️ Database
 
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
+Development: SQLite (`.tmp/data.db`)  
+Production: PostgreSQL recommended
+
+## 🔌 Integrations
+
+- **Stripe**: Payment processing
+- **Telegram Bot**: Order notifications
+- **WebSocket**: Real-time chat
+
+## 📸 Media Library
+
+Uploaded files stored in: `public/uploads/`
+
+Supported formats:
+- Images: JPEG, PNG, WebP, GIF
+- Max size: 10MB
 
 ---
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+Access admin panel at: `http://localhost:1337/admin`
+
+See [main README](../README.md) for full project documentation.

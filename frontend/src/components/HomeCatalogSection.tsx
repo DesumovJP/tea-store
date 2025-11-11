@@ -163,7 +163,7 @@ export default function HomeCatalogSection({ products: propProducts, categories:
                     </Box>
 
                     {/* Search + Sort row */}
-                    <Box style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <Box style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
                         <Box className="home-cat-search">
                             <OutlinedInput
                                 placeholder="Search by name"

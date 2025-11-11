@@ -35,7 +35,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
 
     return (
         <Button onClick={handleAddToCart} className="btn btn--outline btn--sm">
-            <Typography style={{ color: 'inherit', fontSize: '12px', fontWeight: 600 }}>
+            <Typography style={{ color: 'inherit', fontSize: '0.75rem', fontWeight: 600 }}>
                 +
             </Typography>
             <CartIcon size={20} />

@@ -273,7 +273,7 @@ const FeedbackChat: React.FC = () => {
               <Paper elevation={6} className="feedback-paper">
             {/* Header */}
             <Box className="feedback-header">
-              <Box style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <Box style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                 <Box className={`feedback-status ${isConnected ? 'feedback-status--ok' : 'feedback-status--idle'}`} />
                 <Typography 
                   variant="h6" 
@@ -338,11 +338,28 @@ const FeedbackChat: React.FC = () => {
                 <Box className="feedback-input-wrap">
                   {messages.length === 0 ? (
                     // Initial Form
-                    <Box component="form" onSubmit={handleSubmit} style={{ display: 'grid', gap: '10px' }}>
-                  <Typography 
-                    variant="body2" 
-                    className="hipster-heading feedback-initial-title"
-                  >
+                    <Box 
+                      component="form" 
+                      onSubmit={handleSubmit}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1.125rem',
+                        '& .MuiTextField-root': {
+                          margin: 0,
+                          width: '100%'
+                        },
+                        '& .MuiFormControl-root': {
+                          margin: 0,
+                          width: '100%'
+                        }
+                      }}
+                    >
+                      <Typography 
+                        variant="body2" 
+                        className="hipster-heading feedback-initial-title"
+                        sx={{ marginBottom: 0, paddingBottom: '0.5rem' }}
+                      >
                         questions? we happy to help! 😊
                       </Typography>
                       <TextField 
@@ -354,6 +371,7 @@ const FeedbackChat: React.FC = () => {
                         required 
                         fullWidth 
                         className="input input--light"
+                        sx={{ margin: 0 }}
                       />
                       <TextField 
                         name="email" 
@@ -365,6 +383,7 @@ const FeedbackChat: React.FC = () => {
                         required 
                         fullWidth
                         className="input input--light"
+                        sx={{ margin: 0 }}
                       />
                       <TextField 
                         name="message" 
@@ -377,11 +396,13 @@ const FeedbackChat: React.FC = () => {
                         required 
                         fullWidth
                         className="input input--light"
+                        sx={{ margin: 0 }}
                       />
                       <Button 
                         type="submit" 
                         className="btn btn--dark btn--block feedback-send"
                         fullWidth
+                        sx={{ margin: 0 }}
                       >
                         start chat
                       </Button>
@@ -389,7 +410,7 @@ const FeedbackChat: React.FC = () => {
                   ) : (
                     // Chat Input
                     <>
-                      <Box style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <Box style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                         <TextField
                           value={currentMessage}
                           onChange={(e) => setCurrentMessage(e.target.value)}
@@ -421,9 +442,9 @@ const FeedbackChat: React.FC = () => {
                       </Box>
                       {attachment && (
                         <Box className="feedback-attach-box">
-                          <Box style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+                          <Box style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
                             {attachmentPreviewUrl && (
-                              <img src={attachmentPreviewUrl} alt="preview" style={{ width: 40, height: 40, objectFit: 'cover', border: '2px solid #2c2c2c' }} />
+                              <img src={attachmentPreviewUrl} alt="preview" style={{ width: '2.5rem', height: '2.5rem', objectFit: 'cover', border: '2px solid #2c2c2c' }} />
                             )}
                             <Typography 
                               variant="caption" 

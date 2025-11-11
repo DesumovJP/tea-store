@@ -1,71 +1,86 @@
-## Google Analytics (GA4)
+# Frontend - Guru Tea
 
-This project supports GA4 page-view tracking out of the box.
+Next.js 15 application with TypeScript and Material-UI.
 
-1) Add your measurement ID to `.env.local`:
-
-```
-NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-```
-
-2) On localhost, nothing is sent if the var is empty. Once deployed and the env var is present, tracking is enabled automatically. Page views are reported on route changes (Next.js App Router).
-
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
+## 🚀 Development
 
 ```bash
-npm run dev
-# or
+# Install dependencies
+yarn install
+
+# Set up environment variables
+cp .env.local.example .env.local
+# Edit .env.local with your Strapi URL and API keys
+
+# Start development server
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+yarn build
+
+# Start production server
+yarn start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔑 Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Stripe setup
-
-Add the following vars to `.env.local`:
+Create `.env.local` file with:
 
 ```env
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
-STRIPE_SECRET_KEY=sk_test_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_CMS_URL=http://localhost:1337
+NEXT_PUBLIC_STRAPI_API_TOKEN=your_api_token
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_key
+STRIPE_SECRET_KEY=your_stripe_secret
+TELEGRAM_BOT_TOKEN=your_telegram_token
+TELEGRAM_CHAT_ID=your_chat_id
 ```
 
-Run local webhook forwarding:
+## 📁 Project Structure
 
-```bash
-stripe listen --events checkout.session.completed --forward-to localhost:3000/api/stripe/webhook
+```
+src/
+├── app/           # Next.js App Router pages
+│   ├── about/     # About page
+│   ├── admin/     # Admin dashboard
+│   ├── api/       # API routes
+│   ├── cart/      # Shopping cart
+│   └── catalog/   # Product catalog
+├── components/    # React components
+├── hooks/         # Custom React hooks
+├── lib/           # Utilities and API clients
+├── store/         # Zustand stores
+├── theme/         # MUI theme
+└── types/         # TypeScript types
 ```
 
-Flow:
-- Client posts to `/api/stripe/checkout` with cart, contact, and delivery.
-- User pays at Stripe Checkout.
-- Stripe sends `checkout.session.completed` to `/api/stripe/webhook`.
-- Webhook calls internal `/api/order` to email and persist the order in Strapi.
+## 🎨 Key Components
 
-## Learn More
+- **ProductCard** - Product display card
+- **CartDrawer** - Shopping cart sidebar
+- **FeedbackChat** - Real-time support chat
+- **CategoryCarousel** - Category navigation
+- **ReviewList** - Customer reviews display
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js 15.5 (App Router)
+- React 19
+- TypeScript 5
+- Material-UI 6
+- Zustand (State Management)
+- GraphQL & REST
+- Stripe SDK
+- Framer Motion
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔗 API Integration
 
-## Deploy on Vercel
+The frontend connects to Strapi CMS at `localhost:1337` for:
+- Product data (GraphQL)
+- Categories (REST)
+- Reviews (REST)
+- Orders (REST)
+- Real-time chat (WebSocket)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See [main README](../README.md) for full project documentation.

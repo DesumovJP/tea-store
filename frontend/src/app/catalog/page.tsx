@@ -121,10 +121,10 @@ export default function Catalog() {
 
                 {/* Our Story section removed by request */}
 
-                <Box className="catalog-outer-grid">
-                    {/* Left Panel - Teas Introduction and Filters */}
-                    <Box className="catalog-left">
-                        <Box className="catalog-filter-panel">
+                {/* Unified Grid with Filter + Products */}
+                <Box className="catalog-unified-grid">
+                    {/* Filter Panel as First Grid Item - spans 2 rows */}
+                    <Box className="catalog-filter-panel" sx={{ gridRow: { lg: 'span 2' } }}>
                             {/* Teas Heading */}
                             <Typography 
                                 variant="h2" 
@@ -170,7 +170,7 @@ export default function Catalog() {
                                     startAdornment={
                                         <InputAdornment position="start">
                                             <Box component="svg" width={20} height={20} viewBox="0 0 24 24" fill="none" className="catalog-search-icon">
-                                                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"/>
+                                                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                                             </Box>
                                         </InputAdornment>
                                     }
@@ -198,26 +198,17 @@ export default function Catalog() {
                                     </Select>
                                 </FormControl>
                             </Box>
-                        </Box>
                     </Box>
-                    
-                    {/* Product Grid */}
-                    <Box className="catalog-center">
-                        <Grid container spacing={2} className="catalog-product-grid">
-                            {sortedProducts.map((p, idx) => (
-                                <Grid key={p.documentId} size={{ xs: 12, sm: 6, md: 4, lg: 3 }} className={`${styles.card} ${styles.show} ${styles[`d${idx % 20}`]}`}>
-                                    <ProductCard product={p} variant="catalog" onAddToCart={() => handleAddToCart(p)} />
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Box>
-                    {/* Right spacer */}
-                    <Box className="catalog-right" />
-                </Box>
-            </Box>
 
-    
-        
+                    {/* Product Cards */}
+                    {sortedProducts.map((p, idx) => (
+                        <Box key={p.documentId} className={`catalog-product-item ${styles.card} ${styles.show} ${styles[`d${idx % 20}`]}`}>
+                            <ProductCard product={p} variant="catalog" onAddToCart={() => handleAddToCart(p)} />
+                        </Box>
+                    ))}
+                </Box>
+
+            </Box>
         </Box>
     );
 }

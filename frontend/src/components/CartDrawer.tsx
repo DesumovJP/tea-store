@@ -80,7 +80,54 @@ export default function CartDrawer({
                 {/* Cart Items */}
                 <Box className="cart-body">
                     {items.length === 0 ? (
-                        <Typography variant="body1" sx={{ color: '#4a4a4a', fontWeight: 300 }}>your cart is empty</Typography>
+                        <Box sx={{ 
+                            display: 'flex', 
+                            flexDirection: 'column', 
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            height: '100%',
+                            gap: '5%',
+                            padding: '8%'
+                        }}>
+                            <Box component="svg" 
+                                viewBox="0 0 48 48" 
+                                fill="none" 
+                                sx={{ 
+                                    width: '25%', 
+                                    height: 'auto',
+                                    maxWidth: '100px',
+                                    minWidth: '60px',
+                                    color: '#e5e7eb',
+                                    opacity: 0.7
+                                }}
+                            >
+                                <path d="M6 6h4l3.36 16.8a3 3 0 003 2.4h18.48a3 3 0 002.88-2.16L42 12H12" 
+                                    stroke="currentColor" 
+                                    strokeWidth="2.5" 
+                                    strokeLinecap="round" 
+                                    strokeLinejoin="round"/>
+                                <circle cx="17" cy="38" r="2.5" 
+                                    stroke="currentColor" 
+                                    strokeWidth="2.5" 
+                                    fill="currentColor"/>
+                                <circle cx="35" cy="38" r="2.5" 
+                                    stroke="currentColor" 
+                                    strokeWidth="2.5" 
+                                    fill="currentColor"/>
+                            </Box>
+                            <Typography 
+                                variant="body1" 
+                                sx={{ 
+                                    color: '#9ca3af', 
+                                    fontWeight: 300,
+                                    fontSize: '0.95rem',
+                                    textAlign: 'center',
+                                    letterSpacing: '-0.02em'
+                                }}
+                            >
+                                add some products to cart
+                            </Typography>
+                        </Box>
                     ) : (
                         <Stack spacing={2} sx={{ pr: 1 }} className="custom-scrollbar">
                             {items.map((item) => (
